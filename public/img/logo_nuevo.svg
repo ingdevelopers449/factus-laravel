@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 80" width="100%" height="100%">
+    <defs>
+        <!-- Degradado para el ícono principal -->
+        <linearGradient id="iconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" /> <!-- Amber -->
+            <stop offset="100%" style="stop-color:#ea580c;stop-opacity:1" /> <!-- Orange -->
+        </linearGradient>
+        <!-- Degradado para la insignia PRO -->
+        <linearGradient id="proGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" /> <!-- Amber -->
+            <stop offset="100%" style="stop-color:#ea580c;stop-opacity:1" /> <!-- Orange -->
+        </linearGradient>
+        
+        <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
+            <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.15"/>
+        </filter>
+    </defs>
+
+    <!-- Símbolo Abstracto (Documento + Capas) -->
+    <g transform="translate(10, 15)" filter="url(#shadow)">
+        <!-- Capa fondo -->
+        <rect x="12" y="12" width="36" height="36" rx="10" fill="#ffffff" opacity="0.15" />
+        <!-- Capa principal -->
+        <rect x="0" y="0" width="36" height="36" rx="10" fill="url(#iconGrad)" />
+        <!-- Líneas de documento simulando una "F" -->
+        <path d="M10 10 h16 v3.5 h-16 z M10 18 h10 v3.5 h-10 z M10 26 h6 v3.5 h-6 z" fill="#ffffff" />
+    </g>
+
+    <!-- Texto de la Marca -->
+    <g transform="translate(65, 43)">
+        <text x="0" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="34" font-weight="900" fill="#ffffff" letter-spacing="-1">Factu</text>
+        <text x="86" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="34" font-weight="300" fill="#ffffff" letter-spacing="-1">Web</text>
+    </g>
+
+    <!-- Etiqueta PRO -->
+    <g transform="translate(235, 18)" filter="url(#shadow)">
+        <rect x="0" y="0" width="56" height="28" rx="8" fill="url(#proGrad)" />
+        <text x="10" y="19" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="800" fill="#ffffff" letter-spacing="1.5">PRO</text>
+    </g>
+</svg>
