@@ -28,7 +28,26 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        $user = $request->user();
+
+        $destination = match ($user->role?->code) {
+            'admin'    => route('admin.dashboard'),
+            'empleado' => route('empleado.dashboard'),
+            default    => null,
+        };
+
+        if ($destination === null) {
+            Auth::guard('web')->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return redirect()->route('login')
+                ->withErrors([
+                    'email' => 'Tu cuenta no tiene un rol autorizado.',
+                ]);
+        }
+
+        return redirect()->intended($destination);
     }
 
     /**
