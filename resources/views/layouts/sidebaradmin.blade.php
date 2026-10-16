@@ -126,16 +126,18 @@
                 <li class="nav-item">
                     @if (auth()->user()->role?->code === 'ADMIN')
                         <a href="{{ route('admin.clientes.index') }}" class="nav-link {{ request()->routeIs('admin.clientes.*') ? 'active' : '' }}">
-                            <i class="fa-solid fa-user-shield"></i> Clientes
+                            <i class="fa-solid fa-chart-pie"></i> Clientes
                         </a>
                     @endif
                 </li>
 
                 <li class="nav-item px-3 mt-4 mb-2 text-white-50 small fw-bold text-uppercase" style="letter-spacing: 1px;">Catálogo</li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.categorias.index') }}" class="nav-link">
-                        <i class="fa-solid fa-tags"></i> Categorías
-                    </a>
+                    @if (auth()->user()->role?->code === 'ADMIN')
+                        <a href="{{ route('admin.categorias.index') }}" class="nav-link {{ request()->routeIs('admin.categorias.*') ? 'active' : '' }}">
+                            <i class="fa-solid fa-chart-pie"></i> Categorias
+                        </a>
+                    @endif
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">

@@ -109,29 +109,31 @@
 
                             <!-- BTN DE ACCIONES -->
                             <td class="text-center text-nowrap">
-                                <button type="button"
-                                        class="btn btn-sm btn-info"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#verUsuario{{ $usuario->id }}"
-                                        title="Ver usuario">
-                                    <i class="bi bi-eye"></i>
-                                </button>
+                                <div class="d-inline-flex gap-1 justify-content-center">
+                                    <button type="button"
+                                            class="btn-action-icon btn-action-view"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#verUsuario{{ $usuario->id }}"
+                                            title="Ver empleado">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
 
-                                <button type="button"
-                                        class="btn btn-sm btn-warning"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#editarCliente{{ $usuario->id }}"
-                                        title="Editar usuario">
-                                    <i class="bi bi-pencil-square"></i>
-                                </button>
+                                    <button type="button"
+                                            class="btn-action-icon btn-action-edit"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#editarCliente{{ $usuario->id }}"
+                                            title="Editar empleado">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </button>
 
-                                <button type="button"
-                                        class="btn btn-sm btn-danger"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#eliminarCliente{{ $usuario->id }}"
-                                        title="Eliminar usuario">
-                                    <i class="bi bi-trash"></i>
-                                </button>
+                                    <button type="button"
+                                            class="btn-action-icon btn-action-delete"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#eliminarCliente{{ $usuario->id }}"
+                                            title="Eliminar empleado">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </button>
+                                </div>
                             </td>
                         </tr>
 

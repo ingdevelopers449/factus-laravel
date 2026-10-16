@@ -122,29 +122,31 @@
                             </td>
 
                             <td class="text-center text-nowrap">
-                                <button type="button"
-                                        class="btn btn-sm btn-info"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#verCliente{{ $cliente->id_cliente }}"
-                                        title="Ver cliente">
-                                    <i class="bi bi-eye"></i>
-                                </button>
+                                <div class="d-inline-flex gap-1 justify-content-center">
+                                    <button type="button"
+                                            class="btn-action-icon btn-action-view"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#verCliente{{ $cliente->id_cliente }}"
+                                            title="Ver cliente">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
 
-                                <button type="button"
-                                        class="btn btn-sm btn-warning"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#editarCliente{{ $cliente->id_cliente }}"
-                                        title="Editar cliente">
-                                    <i class="bi bi-pencil-square"></i>
-                                </button>
+                                    <button type="button"
+                                            class="btn-action-icon btn-action-edit"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#editarCliente{{ $cliente->id_cliente }}"
+                                            title="Editar cliente">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </button>
 
-                                <button type="button"
-                                        class="btn btn-sm btn-danger"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#eliminarCliente{{ $cliente->id_cliente }}"
-                                        title="Eliminar cliente">
-                                    <i class="bi bi-trash"></i>
-                                </button>
+                                    <button type="button"
+                                            class="btn-action-icon btn-action-delete"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#eliminarCliente{{ $cliente->id_cliente }}"
+                                            title="Eliminar cliente">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </button>
+                                </div>
                             </td>
                         </tr>
 

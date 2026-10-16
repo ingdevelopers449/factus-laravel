@@ -104,21 +104,23 @@
                                     {{ $categoria->created_at?->format('d/m/Y') ?? '—' }}
                                 </td>
 
-                                <td class="text-center">
-                                    <button type="button"
-                                            class="btn btn-sm btn-outline-primary"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modalEditarCategoria{{ $categoria->id_categoria }}">
-                                        <i class="bi bi-pencil-square"></i>
-                                        Editar
-                                    </button>
+                                <td class="text-center text-nowrap">
+                                    <div class="d-inline-flex gap-1 justify-content-center">
+                                        <button type="button"
+                                                class="btn-action-icon btn-action-edit"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modalEditarCategoria{{ $categoria->id_categoria }}"
+                                                title="Editar categoría">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </button>
 
-                                    <button type="button"
-                                            class="btn btn-sm btn-outline-danger"
-                                            onclick="confirmarEliminarCategoria({{ $categoria->id_categoria }}, @js($categoria->categoria))">
-                                        <i class="bi bi-trash"></i>
-                                        Eliminar
-                                    </button>
+                                        <button type="button"
+                                                class="btn-action-icon btn-action-delete"
+                                                onclick="confirmarEliminarCategoria({{ $categoria->id_categoria }}, @js($categoria->categoria))"
+                                                title="Eliminar categoría">
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </button>
+                                    </div>
 
                                     <form id="formEliminarCategoria{{ $categoria->id_categoria }}"
                                           action="{{ route('admin.categorias.destroy', $categoria->id_categoria) }}"
