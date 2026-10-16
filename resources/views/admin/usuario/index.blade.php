@@ -194,9 +194,9 @@
                             </div>
                         </div>
 
-                        {{-- Modal para editar cliente --}}
+                        {{-- Modal para editar usuario --}}
                         <div class="modal fade"
-                            id="editarCliente{{ $cliente->id_cliente }}"
+                            id="editarCliente{{ $usuario->id }}"
                             tabindex="-1"
                             aria-hidden="true">
 
@@ -219,50 +219,71 @@
 
                                         <div class="modal-body">
                                             <div class="mb-3">
-                                                <label class="form-label">Identificación *</label>
+                                                <label class="form-label">Nombre *</label>
                                                 <input type="text"
-                                                    name="identificacion"
+                                                    name="name"
                                                     class="form-control"
                                                     maxlength="20"
-                                                    value="{{ $cliente->identificacion }}"
+                                                    value="{{ $usuario->name }}"
                                                     required>
                                             </div>
 
                                             <div class="mb-3">
-                                                <label class="form-label">Nombre o razón social *</label>
-                                                <input type="text"
-                                                    name="nombre_razon_social"
-                                                    class="form-control"
-                                                    maxlength="150"
-                                                    value="{{ $cliente->nombre_razon_social }}"
-                                                    required>
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label class="form-label">Correo electrónico</label>
+                                                <label class="form-label">Correo *</label>
                                                 <input type="email"
                                                     name="email"
                                                     class="form-control"
                                                     maxlength="150"
-                                                    value="{{ $cliente->email }}">
+                                                    value="{{ $usuario->email }}"
+                                                    required>
+                                            </div>
+                                            {{-- Rol del usuario --}}
+                                            <div class="mb-3">
+                                                <label for="role_id{{ $usuario->id }}" class="form-label">
+                                                    Rol del usuario *
+                                                </label>
+
+                                                <select
+                                                    name="role_id"
+                                                    id="role_id{{ $usuario->id }}"
+                                                    class="form-select"
+                                                    required
+                                                >
+                                                    @foreach ($roles as $rol)
+                                                        <option
+                                                            value="{{ $rol->id }}"
+                                                            {{ $usuario->role_id == $rol->id ? 'selected' : '' }}
+                                                        >
+                                                            {{ $rol->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             </div>
 
+                                            {{-- Estado del usuario --}}
                                             <div class="mb-3">
-                                                <label class="form-label">Teléfono</label>
-                                                <input type="text"
-                                                    name="telefono"
-                                                    class="form-control"
-                                                    maxlength="20"
-                                                    value="{{ $cliente->telefono }}">
-                                            </div>
+                                                <label for="state{{ $usuario->id }}" class="form-label">
+                                                    Estado del usuario
+                                                </label>
 
-                                            <div class="mb-3">
-                                                <label class="form-label">Dirección</label>
-                                                <input type="text"
-                                                    name="direccion"
-                                                    class="form-control"
-                                                    maxlength="255"
-                                                    value="{{ $cliente->direccion }}">
+                                                <select
+                                                    name="state"
+                                                    id="state{{ $usuario->id }}"
+                                                    class="form-select"
+                                                    required
+                                                >
+                                                    <option value="1" {{ (bool) $usuario->state ? 'selected' : '' }}>
+                                                        Activo
+                                                    </option>
+
+                                                    <option value="0" {{ !(bool) $usuario->state ? 'selected' : '' }}>
+                                                        Inactivo
+                                                    </option>
+                                                </select>
+
+                                                <small class="text-muted">
+                                                    Los usuarios inactivos no deberían poder iniciar sesión.
+                                                </small>
                                             </div>
                                         </div>
 

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\ClienteController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\UsuarioController;
+use App\Http\Controllers\Admin\CategoriaController;
 use App\Http\Controllers\Empleado\DashboardController as EmpleadoDashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\EnsureUserHasRole;
@@ -31,6 +32,9 @@ Route::middleware([Authenticate::class, EnsureUserHasRole::class.':admin'])
             ->name('usuario.index');
         Route::get('/clientes', [ClienteController::class, 'index'])
             ->name('clientes.index');
+        // RUTA VISTA DE CATEGORIAS
+        Route::get('/categorias', [CategoriaController::class, 'index'])
+            ->name('categorias.index');
 
         // RUTA METODO POST DEL MODAL DE CREAR EMPLEADO
         Route::post('/admin/usuario', [

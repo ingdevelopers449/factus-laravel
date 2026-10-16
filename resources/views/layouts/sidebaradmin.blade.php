@@ -52,6 +52,10 @@
                 ['icono' => 'fa-file-invoice-dollar', 'label' => 'Ventas'],
                 ['icono' => 'fa-users', 'label' => 'Clientes']
             ],
+            'admin.clientes.index' => [
+                ['icono' => 'fa-file-invoice-dollar', 'label' => 'Ventas'],
+                ['icono' => 'fa-users', 'label' => 'Clientes']
+            ],
             'admin.categorias' => [
                 ['icono' => 'fa-box-open', 'label' => 'Catálogo'],
                 ['icono' => 'fa-tags', 'label' => 'Categorías']
@@ -84,7 +88,16 @@
                 ['icono' => 'fa-user-gear', 'label' => 'Mi Perfil']
             ]
         ];
-        $breadcrumbs = $breadcrumb_map[$current_route] ?? [['icono' => 'fa-chart-pie', 'label' => 'Dashboard']];
+        $breadcrumbs = $breadcrumb_map[$current_route] ?? null;
+        if (! $breadcrumbs) {
+            foreach ($breadcrumb_map as $pattern => $crumbs) {
+                if (request()->routeIs($pattern) || request()->routeIs($pattern . '.*')) {
+                    $breadcrumbs = $crumbs;
+                    break;
+                }
+            }
+        }
+        $breadcrumbs = $breadcrumbs ?? [['icono' => 'fa-chart-pie', 'label' => 'Dashboard']];
     @endphp
 
     <div class="app-container d-flex">
@@ -120,7 +133,7 @@
 
                 <li class="nav-item px-3 mt-4 mb-2 text-white-50 small fw-bold text-uppercase" style="letter-spacing: 1px;">Catálogo</li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('admin.categorias.index') }}" class="nav-link">
                         <i class="fa-solid fa-tags"></i> Categorías
                     </a>
                 </li>
