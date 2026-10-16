@@ -38,11 +38,21 @@ Route::middleware([Authenticate::class, EnsureUserHasRole::class.':admin'])
             'store',
         ])->name('usuario.store');
 
+        // RUTA METODO POST DEL MODAL DE CREAR CLIENTE
         Route::post('/admin/clientes', [
             \App\Http\Controllers\Admin\ClienteController::class,
             'store',
         ])->name('clientes.store');
-    });
+
+        // BTN DE ACCIÓN ACTUALIZAR CLIENTE
+        Route::put('clientes/{cliente}', [ClienteController::class,
+            'update',
+        ])->name('clientes.update');
+
+        // BTN DE ACCIÓN ELIMIANR CLIENTE
+        Route::delete('clientes/{cliente}', [ClienteController::class, 'destroy'])
+            ->name('clientes.destroy');
+            });
 
 Route::middleware([Authenticate::class, EnsureUserHasRole::class.':empleado'])
     ->prefix('empleado')

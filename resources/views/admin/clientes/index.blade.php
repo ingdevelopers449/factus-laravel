@@ -88,6 +88,7 @@
                         <th>Correo electrónico</th>
                         <th>Teléfono</th>
                         <th>Dirección</th>
+                        <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
 
@@ -119,7 +120,219 @@
                                     {{ $cliente->direccion ?? 'No registrada' }}
                                 </span>
                             </td>
+
+                            <td class="text-center text-nowrap">
+                                <button type="button"
+                                        class="btn btn-sm btn-info"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#verCliente{{ $cliente->id_cliente }}"
+                                        title="Ver cliente">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+
+                                <button type="button"
+                                        class="btn btn-sm btn-warning"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#editarCliente{{ $cliente->id_cliente }}"
+                                        title="Editar cliente">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+
+                                <button type="button"
+                                        class="btn btn-sm btn-danger"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#eliminarCliente{{ $cliente->id_cliente }}"
+                                        title="Eliminar cliente">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
                         </tr>
+
+                        {{-- Modal para ver cliente --}}
+                        <div class="modal fade"
+                            id="verCliente{{ $cliente->id_cliente }}"
+                            tabindex="-1"
+                            aria-hidden="true">
+
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Información del cliente</h5>
+                                        <button type="button"
+                                                class="btn-close"
+                                                data-bs-dismiss="modal"
+                                                aria-label="Cerrar"></button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <p><strong>Identificación:</strong>
+                                            {{ $cliente->identificacion }}</p>
+
+                                        <p><strong>Nombre o razón social:</strong>
+                                            {{ $cliente->nombre_razon_social }}</p>
+
+                                        <p><strong>Correo:</strong>
+                                            {{ $cliente->email ?: 'No registrado' }}</p>
+
+                                        <p><strong>Teléfono:</strong>
+                                            {{ $cliente->telefono ?: 'No registrado' }}</p>
+
+                                        <p><strong>Dirección:</strong>
+                                            {{ $cliente->direccion ?: 'No registrada' }}</p>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button"
+                                                class="btn btn-secondary"
+                                                data-bs-dismiss="modal">
+                                            Cerrar
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Modal para editar cliente --}}
+                        <div class="modal fade"
+                            id="editarCliente{{ $cliente->id_cliente }}"
+                            tabindex="-1"
+                            aria-hidden="true">
+
+                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                <div class="modal-content">
+
+                                    <form action="{{ route('admin.clientes.update', $cliente->id_cliente) }}"
+                                        method="POST">
+
+                                        @csrf
+                                        @method('PUT')
+
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Editar cliente</h5>
+                                            <button type="button"
+                                                    class="btn-close"
+                                                    data-bs-dismiss="modal"
+                                                    aria-label="Cerrar"></button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <div class="mb-3">
+                                                <label class="form-label">Identificación *</label>
+                                                <input type="text"
+                                                    name="identificacion"
+                                                    class="form-control"
+                                                    maxlength="20"
+                                                    value="{{ $cliente->identificacion }}"
+                                                    required>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Nombre o razón social *</label>
+                                                <input type="text"
+                                                    name="nombre_razon_social"
+                                                    class="form-control"
+                                                    maxlength="150"
+                                                    value="{{ $cliente->nombre_razon_social }}"
+                                                    required>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Correo electrónico</label>
+                                                <input type="email"
+                                                    name="email"
+                                                    class="form-control"
+                                                    maxlength="150"
+                                                    value="{{ $cliente->email }}">
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Teléfono</label>
+                                                <input type="text"
+                                                    name="telefono"
+                                                    class="form-control"
+                                                    maxlength="20"
+                                                    value="{{ $cliente->telefono }}">
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Dirección</label>
+                                                <input type="text"
+                                                    name="direccion"
+                                                    class="form-control"
+                                                    maxlength="255"
+                                                    value="{{ $cliente->direccion }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button"
+                                                    class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">
+                                                Cancelar
+                                            </button>
+
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="bi bi-save"></i> Guardar cambios
+                                            </button>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Modal para confirmar eliminación --}}
+                        <div class="modal fade"
+                            id="eliminarCliente{{ $cliente->id_cliente }}"
+                            tabindex="-1"
+                            aria-hidden="true">
+
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+
+                                    <form action="{{ route('admin.clientes.destroy', $cliente->id_cliente) }}"
+                                        method="POST">
+
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Eliminar cliente</h5>
+                                            <button type="button"
+                                                    class="btn-close"
+                                                    data-bs-dismiss="modal"
+                                                    aria-label="Cerrar"></button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            ¿Estás seguro de que deseas eliminar al cliente
+                                            <strong>{{ $cliente->nombre_razon_social }}</strong>?
+
+                                            <p class="text-danger mb-0 mt-2">
+                                                Esta acción no se puede deshacer.
+                                            </p>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button"
+                                                    class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">
+                                                Cancelar
+                                            </button>
+
+                                            <button type="submit" class="btn btn-danger">
+                                                <i class="bi bi-trash"></i> Sí, eliminar
+                                            </button>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
                     @empty
                         <tr>
                             <td colspan="5" class="text-center py-5">
@@ -290,6 +503,20 @@
         </div>
     </div>
 </div>
+
+
+@if (session('success'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                icon: 'success',
+                title: '¡Operación exitosa!',
+                text: {{ Illuminate\Support\Js::from(session('success')) }},
+                confirmButtonText: 'Aceptar'
+            });
+        });
+    </script>
+@endif
 
 @endsection
 
