@@ -175,8 +175,8 @@
             <div class="modal-body p-4">
                 <form id="formNuevoEmpleado"
                     action="{{ route('admin.usuario.store') }}"
-                    method="POST"
-                @csrf
+                    method="POST">
+                    @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label fw-semibold">
                                 Nombre completo
