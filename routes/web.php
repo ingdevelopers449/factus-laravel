@@ -1,23 +1,36 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\UsuarioController;
 use App\Http\Controllers\Empleado\DashboardController as EmpleadoDashboardController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\EnsureUserHasRole;
+use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth', 'role:admin'])
+Route::get('/dashboard', function () {
+    return match (auth()->user()?->role?->code) {
+        'admin' => redirect()->route('admin.dashboard'),
+        'empleado' => redirect()->route('empleado.dashboard'),
+        default => redirect()->route('login'),
+    };
+})->middleware(Authenticate::class)->name('dashboard');
+
+Route::middleware([Authenticate::class, EnsureUserHasRole::class.':admin'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])
             ->name('dashboard');
+        Route::get('/usuario', [UsuarioController::class, 'index'])
+            ->name('usuario.index');
     });
 
-Route::middleware(['auth', 'role:empleado'])
+Route::middleware([Authenticate::class, EnsureUserHasRole::class.':empleado'])
     ->prefix('empleado')
     ->name('empleado.')
     ->group(function () {
@@ -25,8 +38,7 @@ Route::middleware(['auth', 'role:empleado'])
             ->name('dashboard');
     });
 
-
-Route::middleware('auth')->group(function () {
+Route::middleware(Authenticate::class)->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

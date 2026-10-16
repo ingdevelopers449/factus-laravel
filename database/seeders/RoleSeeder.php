@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class RoleSeeder extends Seeder
 {
@@ -15,11 +14,11 @@ class RoleSeeder extends Seeder
     {
         DB::table('roles')->upsert(
             [
-                ['code' => 'admin', 'name' => 'Administrador', 'nombre_rol' => 'Administrador'],
-                ['code' => 'empleado', 'name' => 'Empleado', 'nombre_rol' => 'Empleado'],
+                ['code' => 'admin', 'name' => 'Administrador'],
+                ['code' => 'empleado', 'name' => 'Empleado'],
             ],
             ['code'],
-            ['name', 'nombre_rol']
+            ['name']
         );
     }
 }

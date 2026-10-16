@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('code', 30)->unique();
             $table->string('name', 100);
-            $table->string('nombre_rol', 100)->nullable();
         });
     }
 

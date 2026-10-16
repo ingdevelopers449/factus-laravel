@@ -26,46 +26,16 @@ return new class extends Migration
         });
 
         // 2. ROLES
-        if (!Schema::hasTable('roles')) {
+        if (! Schema::hasTable('roles')) {
             Schema::create('roles', function (Blueprint $table) {
                 $table->id();
-                $table->string('code', 30)->nullable()->unique();
-                $table->string('name', 100)->nullable();
-                $table->string('nombre_rol', 100)->nullable()->unique();
-            });
-        } elseif (!Schema::hasColumn('roles', 'nombre_rol')) {
-            Schema::table('roles', function (Blueprint $table) {
-                $table->string('nombre_rol', 100)->nullable()->after('name');
+                $table->string('code', 30)->unique();
+                $table->string('name', 100);
             });
         }
 
-        // 3. USUARIOS
+        // 3. TABLA USUARIOS DESCARTADA: Se utiliza la tabla nativa de Laravel 'users'
         Schema::dropIfExists('usuarios');
-        Schema::create('usuarios', function (Blueprint $table) {
-            $table->id('id_usuario');
-            $table->unsignedBigInteger('id_empresa');
-            $table->string('nombre', 150);
-            $table->string('email', 150)->unique();
-            $table->string('password_hash', 255);
-            $table->unsignedBigInteger('id_rol');
-            $table->string('estado', 30)->default('activo');
-            $table->unsignedInteger('intentos_fallidos')->default(0);
-            $table->dateTime('ultimo_acceso')->nullable();
-            $table->string('token_recuperacion', 255)->nullable();
-            $table->decimal('porcentaje_comision', 5, 2)->default(0);
-
-            $table->foreign('id_empresa', 'fk_usuarios_empresa')
-                ->references('id_empresa')
-                ->on('empresa')
-                ->onUpdate('cascade')
-                ->onDelete('restrict');
-
-            $table->foreign('id_rol', 'fk_usuarios_rol')
-                ->references('id')
-                ->on('roles')
-                ->onUpdate('cascade')
-                ->onDelete('restrict');
-        });
 
         // 4. CATEGORIAS
         Schema::dropIfExists('categorias');
@@ -180,8 +150,8 @@ return new class extends Migration
                 ->onDelete('restrict');
 
             $table->foreign('id_usuario', 'fk_facturas_usuario')
-                ->references('id_usuario')
-                ->on('usuarios')
+                ->references('id')
+                ->on('users')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
         });
@@ -195,8 +165,8 @@ return new class extends Migration
             $table->timestamp('fecha_actualizacion')->nullable()->useCurrent()->useCurrentOnUpdate();
 
             $table->foreign('id_usuario', 'fk_borrador_usuario')
-                ->references('id_usuario')
-                ->on('usuarios')
+                ->references('id')
+                ->on('users')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
 
