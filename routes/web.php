@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\EnsureUserHasRole;
 use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
+use App\Models\Categoria;
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,8 +29,11 @@ Route::middleware([Authenticate::class, EnsureUserHasRole::class.':admin'])
     ->group(function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])
             ->name('dashboard');
+        
+        // RUTA VISTA GESTION DE USUARIO
         Route::get('/usuario', [UsuarioController::class, 'index'])
             ->name('usuario.index');
+        // RUTA VISTA DE GESTION DE CLIENTES
         Route::get('/clientes', [ClienteController::class, 'index'])
             ->name('clientes.index');
         // RUTA VISTA DE CATEGORIAS
@@ -65,6 +69,18 @@ Route::middleware([Authenticate::class, EnsureUserHasRole::class.':admin'])
         // BTN DE ACCIÓN ELIMIANAR EMPLEADO/USUARIO
         Route::delete('usuario/{usuario}', [UsuarioController::class, 'destroy'])
             ->name('usuario.destroy');
+        
+        // RUTA STORE CATEGORIA
+        Route::delete('categorias/{categorias}', [CategoriaController::class, 'store'])
+            ->name('categorias.store');
+
+        // RUTA UPDATE CATEGORIA
+        Route::delete('categorias/{categorias}', [CategoriaController::class, 'update'])
+            ->name('categorias.update');
+        
+        // RUTA STORE CATEGORIA
+        Route::delete('categorias/{categorias}', [CategoriaController::class, 'destroy'])
+            ->name('categorias.destroy');
     }); // CIERRE DEL MIDDLWARE DE ADMIN
 
 Route::middleware([Authenticate::class, EnsureUserHasRole::class.':empleado'])
