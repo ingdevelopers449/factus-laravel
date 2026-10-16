@@ -28,6 +28,12 @@ Route::middleware([Authenticate::class, EnsureUserHasRole::class.':admin'])
             ->name('dashboard');
         Route::get('/usuario', [UsuarioController::class, 'index'])
             ->name('usuario.index');
+
+        // RUTA METODO POST DEL MODAL DE CREAR EMPLEADO
+        Route::post('/admin/usuario', [
+            \App\Http\Controllers\Admin\UsuarioController::class,
+            'store',
+        ])->name('usuario.store');
     });
 
 Route::middleware([Authenticate::class, EnsureUserHasRole::class.':empleado'])

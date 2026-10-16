@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -17,8 +19,9 @@ class UsuarioController extends Controller
         $usuarios = User::with('role')
             ->orderBy('name')
             ->paginate(10);
-
-        return view('admin.usuario.index', compact('usuarios'));
+        
+        $roles = Role::orderBy('name')->get();
+        return view('admin.usuario.index', compact('usuarios', 'roles'));
     }
 
     /**
@@ -32,9 +35,23 @@ class UsuarioController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        //
+        // VALIDAR LOS DATOS RECIBIDOS
+        $datos = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+            'role_id'=> ['required', 'exists:roles,id'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        // CREAR EL USUARIO
+        User::create($datos);
+
+        // REGRESAR A LA LISTA CON UN MENSAJE
+        return redirect()
+            ->route('admin.usuario.index')
+            ->with('success', 'Empleado registrado correctamente');
     }
 
     /**
