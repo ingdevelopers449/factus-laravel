@@ -37,6 +37,11 @@ Route::middleware([Authenticate::class, EnsureUserHasRole::class.':admin'])
             \App\Http\Controllers\Admin\UsuarioController::class,
             'store',
         ])->name('usuario.store');
+
+        Route::post('/admin/clientes', [
+            \App\Http\Controllers\Admin\ClienteController::class,
+            'store',
+        ])->name('clientes.store');
     });
 
 Route::middleware([Authenticate::class, EnsureUserHasRole::class.':empleado'])

@@ -124,5 +124,143 @@
 
     </div>
 </div>
+
+
+{{-- Modal: Nuevo Cliente --}}
+<div class="modal fade" id="modalNuevoCliente"
+     tabindex="-1" aria-labelledby="tituloModalCliente"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 rounded-4 shadow">
+
+            {{-- Encabezado --}}
+            <div class="modal-header px-4 py-3">
+                <div>
+                    <h5 class="modal-title fw-bold" id="tituloModalCliente">
+                        <i class="fa-solid fa-user-plus text-primary me-2"></i>
+                        Nuevo Cliente
+                    </h5>
+                    <p class="text-muted small mb-0 mt-1">
+                        Registra los datos del cliente.
+                    </p>
+                </div>
+
+                <button type="button" class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Cerrar"></button>
+            </div>
+
+            {{-- Formulario --}}
+            <form id="formNuevoCliente"
+                  action="{{ route('admin.clientes.store') }}"
+                  method="POST">
+                @csrf
+
+                <div class="modal-body p-4">
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+                            <label for="identificacion"
+                                   class="form-label fw-semibold">
+                                Identificación <span class="text-danger">*</span>
+                            </label>
+
+                            <input type="text"
+                                   class="form-control"
+                                   id="identificacion"
+                                   name="identificacion"
+                                   maxlength="20"
+                                   value="{{ old('identificacion') }}"
+                                   placeholder="Número de documento"
+                                   required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="nombre_razon_social"
+                                   class="form-label fw-semibold">
+                                Nombre o razón social <span class="text-danger">*</span>
+                            </label>
+
+                            <input type="text"
+                                   class="form-control"
+                                   id="nombre_razon_social"
+                                   name="nombre_razon_social"
+                                   maxlength="150"
+                                   value="{{ old('nombre_razon_social') }}"
+                                   placeholder="Nombre completo o empresa"
+                                   required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="email" class="form-label fw-semibold">
+                                Correo electrónico
+                            </label>
+
+                            <input type="email"
+                                   class="form-control"
+                                   id="email"
+                                   name="email"
+                                   maxlength="150"
+                                   value="{{ old('email') }}"
+                                   placeholder="cliente@correo.com">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="telefono" class="form-label fw-semibold">
+                                Teléfono
+                            </label>
+
+                            <input type="text"
+                                   class="form-control"
+                                   id="telefono"
+                                   name="telefono"
+                                   maxlength="20"
+                                   value="{{ old('telefono') }}"
+                                   placeholder="Número de contacto">
+                        </div>
+
+                        <div class="col-12">
+                            <label for="direccion" class="form-label fw-semibold">
+                                Dirección
+                            </label>
+
+                            <input type="text"
+                                   class="form-control"
+                                   id="direccion"
+                                   name="direccion"
+                                   maxlength="255"
+                                   value="{{ old('direccion') }}"
+                                   placeholder="Dirección del cliente">
+                        </div>
+
+                    </div>
+
+                    <p class="text-muted small mt-3 mb-0">
+                        <span class="text-danger">*</span>
+                        Campos obligatorios.
+                    </p>
+                </div>
+
+                {{-- Botones --}}
+                <div class="modal-footer px-4 py-3">
+                    <button type="button"
+                            class="btn btn-light border"
+                            data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+
+                    <button type="submit"
+                            class="btn btn-primary-gradient">
+                        <i class="fa-solid fa-floppy-disk me-1"></i>
+                        Guardar cliente
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
 @endsection
 
