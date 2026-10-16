@@ -71,15 +71,15 @@ Route::middleware([Authenticate::class, EnsureUserHasRole::class.':admin'])
             ->name('usuario.destroy');
         
         // RUTA STORE CATEGORIA
-        Route::delete('categorias/{categorias}', [CategoriaController::class, 'store'])
+        Route::post('/categorias', [CategoriaController::class, 'store'])
             ->name('categorias.store');
 
         // RUTA UPDATE CATEGORIA
-        Route::delete('categorias/{categorias}', [CategoriaController::class, 'update'])
+        Route::put('/categorias/{id}', [CategoriaController::class, 'update'])
             ->name('categorias.update');
         
         // RUTA STORE CATEGORIA
-        Route::delete('categorias/{categorias}', [CategoriaController::class, 'destroy'])
+        Route::delete('/categorias/{id}', [CategoriaController::class, 'destroy'])
             ->name('categorias.destroy');
     }); // CIERRE DEL MIDDLWARE DE ADMIN
 
