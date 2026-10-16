@@ -49,7 +49,7 @@
                         <th>Rol Asignado</th>
                         <th>Estado</th>
                         <th>Fecha Registro</th>
-                        <th class="text-end pe-4">Acciones</th>
+                        <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,7 +57,7 @@
                         @php
                             $role_code = strtoupper($usuario->role?->code ?? '');
                             $is_admin = ($role_code === 'ADMIN');
-                            $badge_class = $is_admin ? 'badge-role-admin' : 'badge-role-empleado';
+                            $badge_class = $usuario->role ? ($is_admin ? 'badge-role-admin' : 'badge-role-empleado') : 'badge-role-none';
                             $inicial = strtoupper(substr($usuario->name, 0, 1));
                         @endphp
                         <tr>
@@ -76,27 +76,19 @@
                                 <span class="text-secondary small">{{ $usuario->email }}</span>
                             </td>
                             <td>
-                                @php
-                                    $is_admin = strtoupper($usuario->role?->code ?? '') === 'ADMIN';
-
-                                    $badge_class = $is_admin
-                                        ? 'bg-warning text-dark'
-                                        : 'bg-success';
-                                @endphp
-
-                                <span class="badge rounded-pill px-3 py-2 {{ $badge_class }}">
-                                    <i class="fa-solid {{ $is_admin ? 'fa-shield-halved' : 'fa-user' }} me-1"></i>
+                                <span class="{{ $badge_class }}">
+                                    <i class="fa-solid {{ $is_admin ? 'fa-shield-halved' : ($usuario->role ? 'fa-user' : 'fa-circle-question') }} me-1"></i>
                                     {{ $usuario->role?->name ?? 'Sin rol asignado' }}
                                 </span>
                             </td>
                             <td>
                                 @if ($usuario->state)
-                                    <span class="badge bg-success">
-                                        <i class="fa-solid fa-circle-check me-1"></i> Activo
+                                    <span class="badge-status-active">
+                                        <i class="fa-solid fa-circle fa-2xs me-1" style="color: #16a34a;"></i> Activo
                                     </span>
                                 @else
-                                    <span class="badge rounded-pill badge-secondary">
-                                        <i class="fa-solid fa-circle-xmark me-1"></i> Inactivo
+                                    <span class="badge-status-inactive">
+                                        <i class="fa-solid fa-circle fa-2xs me-1" style="color: #dc2626;"></i> Inactivo
                                     </span>
                                 @endif
                             </td>
@@ -161,20 +153,24 @@
                                         <p><strong>Correo:</strong>
                                             {{ $usuario->email }}</p>
 
-                                        <p><strong>Rol:</strong>
-                                            {{ $usuario->role?->name ?? 'Sin rol asignado' }}</p>
+                                        <p class="d-flex align-items-center gap-2">
+                                            <strong>Rol:</strong>
+                                            <span class="{{ $badge_class }}">
+                                                <i class="fa-solid {{ $is_admin ? 'fa-shield-halved' : ($usuario->role ? 'fa-user' : 'fa-circle-question') }} me-1"></i>
+                                                {{ $usuario->role?->name ?? 'Sin rol asignado' }}
+                                            </span>
+                                        </p>
 
-                                        <p>
+                                        <p class="d-flex align-items-center gap-2">
                                             <strong>Estado:</strong>
-
                                             @if ((bool) $usuario->state)
-                                                <span class="badge bg-success">
-                                                    <i class="fa-solid fa-circle-check me-1"></i>
+                                                <span class="badge-status-active">
+                                                    <i class="fa-solid fa-circle fa-2xs me-1" style="color: #16a34a;"></i>
                                                     Activo
                                                 </span>
                                             @else
-                                                <span class="badge bg-danger">
-                                                    <i class="fa-solid fa-circle-xmark me-1"></i>
+                                                <span class="badge-status-inactive">
+                                                    <i class="fa-solid fa-circle fa-2xs me-1" style="color: #dc2626;"></i>
                                                     Inactivo
                                                 </span>
                                             @endif

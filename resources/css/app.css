@@ -1122,19 +1122,68 @@ body.ticket-pos {
     color: #0f172a;
 }
 
+/* Badges de Roles (FactuWeb PRO - Soft & Profesional) */
 .badge-role-admin {
-    background-color: #ea580c;
-    color: #ffffff;
-    font-size: 0.75rem;
+    background-color: #fff7ed;
+    color: #c2410c;
+    border: 1px solid #fed7aa;
+    font-size: 0.78rem;
     font-weight: 600;
+    padding: 0.35rem 0.75rem;
+    border-radius: 50rem;
+    display: inline-flex;
+    align-items: center;
 }
 
 .badge-role-empleado {
-    background-color: #10b981;
-    color: #ffffff;
-    font-size: 0.75rem;
+    background-color: #eff6ff;
+    color: #1e40af;
+    border: 1px solid #dbeafe;
+    font-size: 0.78rem;
     font-weight: 600;
+    padding: 0.35rem 0.75rem;
+    border-radius: 50rem;
+    display: inline-flex;
+    align-items: center;
 }
+
+.badge-role-none {
+    background-color: #f1f5f9;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.35rem 0.75rem;
+    border-radius: 50rem;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Badges de Estado (Soft & Mate, sin tonos neón) */
+.badge-status-active {
+    background-color: #f0fdf4;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.35rem 0.75rem;
+    border-radius: 50rem;
+    display: inline-flex;
+    align-items: center;
+}
+
+.badge-status-inactive {
+    background-color: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.35rem 0.75rem;
+    border-radius: 50rem;
+    display: inline-flex;
+    align-items: center;
+}
+
 
 .btn-action-icon {
     width: 34px;

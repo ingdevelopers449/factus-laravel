@@ -11,13 +11,19 @@ class CategoriaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categorias = Categoria::orderBy('categoria')->paginate(10);
+        $buscar = $request->query('buscar');
 
-        return view('admin.categorias.index', compact('categorias'));
+        $categorias = Categoria::when($buscar, function ($query, $buscar) {
+            $query->where('categoria', 'like', "%{$buscar}%")
+                ->orWhere('descripcion', 'like', "%{$buscar}%");
+        })
+            ->orderBy('categoria')
+            ->paginate(10)
+            ->withQueryString();
 
-        return view('admin.categorias.index');
+        return view('admin.categorias.index', compact('categorias', 'buscar'));
     }
 
     /**
