@@ -10,12 +10,24 @@ use Illuminate\Http\Request;
 
 class ClienteController extends Controller
 {
-    public function index(): View{
-        $clientes = Cliente::orderBy('nombre_razon_social')
-            ->paginate(10);
+    public function index(Request $request): View
+{
+    $buscar = $request->input('buscar');
 
-        return view('admin.clientes.index', compact('clientes'));
-    }
+    $clientes = Cliente::query()
+        ->when($buscar, function ($query, $buscar) {
+            $query->where(function ($q) use ($buscar) {
+                $q->where('identificacion', 'like', "%{$buscar}%")
+                  ->orWhere('nombre_razon_social', 'like', "%{$buscar}%")
+                  ->orWhere('email', 'like', "%{$buscar}%");
+            });
+        })
+        ->orderBy('nombre_razon_social')
+        ->paginate(10)
+        ->withQueryString();
+
+    return view('admin.clientes.index', compact('clientes', 'buscar'));
+}
 
     public function store(Request $request): RedirectResponse
     {

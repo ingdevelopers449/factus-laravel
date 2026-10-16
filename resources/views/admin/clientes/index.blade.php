@@ -31,26 +31,55 @@
             <i class="fa-solid fa-user-plus"></i>
             <span>Nuevo Cliente</span>
         </button>
+
     </div>
 
     {{-- Tabla de clientes --}}
     <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
 
-        <div class="card-header bg-white border-bottom py-3 px-4
-                    d-flex justify-content-between align-items-center">
+        {{-- Cabecera con título/conteo a la izquierda y buscador integrado a la derecha --}}
+        <div class="card-header bg-white border-bottom py-3 px-4">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
 
-            <span class="fw-semibold text-secondary small">
-                <i class="fa-solid fa-list-check me-1"></i>
-                Clientes registrados
-            </span>
+                {{-- Título y Badge --}}
+                <div class="d-flex align-items-center gap-2">
+                    <span class="fw-semibold text-secondary small">
+                        <i class="fa-solid fa-list-check me-1"></i>
+                        Clientes registrados
+                    </span>
 
-            <span class="badge rounded-pill bg-light text-dark border px-3 py-2">
-                Total: {{ $clientes->total() }}
-            </span>
+                    <span class="badge rounded-pill bg-light text-dark border px-3 py-1 small">
+                        Total: {{ $clientes->total() }}
+                    </span>
+                </div>
+
+                {{-- Buscador Integrado --}}
+                <form action="{{ route('admin.clientes.index') }}" method="GET" class="m-0" style="min-width: 280px; max-width: 420px; width: 100%;">
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0 text-muted">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </span>
+                        <input type="text"
+                               name="buscar"
+                               class="form-control bg-light border-start-0 ps-0"
+                               placeholder="Identificación, nombre o email..."
+                               value="{{ $buscar }}">
+                        <button type="submit" class="btn btn-primary-gradient px-3">
+                            Buscar
+                        </button>
+                        @if ($buscar)
+                            <a href="{{ route('admin.clientes.index') }}" class="btn btn-light border" title="Limpiar búsqueda">
+                                <i class="fa-solid fa-xmark text-secondary"></i>
+                            </a>
+                        @endif
+                    </div>
+                </form>
+
+            </div>
         </div>
 
         <div class="table-responsive">
-            <table class="table align-middle mb-0 table-hover">
+            <table class="table align-middle mb-0 table-hover table-admin">
 
                 <thead class="table-light">
                     <tr>
