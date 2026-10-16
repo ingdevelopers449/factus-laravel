@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Role;
-use Illuminate\Http\RedirectResponse;
 use App\Models\Cliente;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
-use Illuminate\Http\Request;
 
 class ClienteController extends Controller
 {
@@ -20,8 +19,8 @@ class ClienteController extends Controller
             ->when($buscar, function ($query, $buscar) {
                 $query->where(function ($q) use ($buscar) {
                     $q->where('identificacion', 'like', "%{$buscar}%")
-                    ->orWhere('nombre_razon_social', 'like', "%{$buscar}%")
-                    ->orWhere('email', 'like', "%{$buscar}%");
+                        ->orWhere('nombre_razon_social', 'like', "%{$buscar}%")
+                        ->orWhere('email', 'like', "%{$buscar}%");
                 });
             })
             ->orderBy('nombre_razon_social')
@@ -34,30 +33,29 @@ class ClienteController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $datos = $request->validate([
-        'identificacion' => [
-            'required',
-            'string',
-            'max:20',
-            'unique:clientes,identificacion',
-        ],
-        'nombre_razon_social' => [
-            'required',
-            'string',
-            'max:150',
-        ],
-        'email' => ['nullable', 'email', 'max:150'],
-        'direccion' => ['nullable', 'string', 'max:255'],
-        'telefono' => ['nullable', 'string', 'max:20'],
-    ]);
+            'identificacion' => [
+                'required',
+                'string',
+                'max:20',
+                'unique:clientes,identificacion',
+            ],
+            'nombre_razon_social' => [
+                'required',
+                'string',
+                'max:150',
+            ],
+            'email' => ['nullable', 'email', 'max:150'],
+            'direccion' => ['nullable', 'string', 'max:255'],
+            'telefono' => ['nullable', 'string', 'max:20'],
+        ]);
 
-    Cliente::create($datos);
+        Cliente::create($datos);
 
-    return redirect()
-        ->route('admin.clientes.index')
-        ->with('success', 'Cliente registrado correctamente.'); 
+        return redirect()
+            ->route('admin.clientes.index')
+            ->with('success', 'Cliente registrado correctamente.');
     }
 
-    
     public function update(Request $request, $id): RedirectResponse
     {
         // Buscar el cliente por su clave primaria
@@ -91,13 +89,12 @@ class ClienteController extends Controller
             ->with('success', 'Cliente actualizado correctamente.');
     }
 
-
     public function destroy(Cliente $cliente): RedirectResponse
-        {
-            $cliente->delete();
+    {
+        $cliente->delete();
 
-            return redirect()
-                ->route('admin.clientes.index')
-                ->with('success', 'Cliente eliminado correctamente.');
-        }
+        return redirect()
+            ->route('admin.clientes.index')
+            ->with('success', 'Cliente eliminado correctamente.');
+    }
 }

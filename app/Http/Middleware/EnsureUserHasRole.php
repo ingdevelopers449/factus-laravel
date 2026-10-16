@@ -17,14 +17,14 @@ class EnsureUserHasRole
     {
         $user = $request->user();
 
-        if (!$user) {
+        if (! $user) {
             abort(401);
         }
 
         $roleCode = strtolower((string) $user->role?->code);
         $allowedRoles = array_map('strtolower', $roles);
 
-        if (!in_array($roleCode, $allowedRoles, true)) {
+        if (! in_array($roleCode, $allowedRoles, true)) {
             abort(403, 'No tienes permiso para acceder.');
         }
 

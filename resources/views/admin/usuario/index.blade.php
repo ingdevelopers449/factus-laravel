@@ -47,6 +47,7 @@
                         <th class="ps-4">Usuario</th>
                         <th>Correo Electrónico</th>
                         <th>Rol Asignado</th>
+                        <th>Estado</th>
                         <th>Fecha Registro</th>
                         <th class="text-end pe-4">Acciones</th>
                     </tr>
@@ -81,24 +82,108 @@
                                 </span>
                             </td>
                             <td>
+                                @if ($usuario->state)
+                                    <span class="badge rounded-pill bg-success-subtle text-success border border-success-subtle px-3 py-1 fw-semibold">
+                                        <i class="fa-solid fa-circle-check me-1"></i> Activo
+                                    </span>
+                                @else
+                                    <span class="badge rounded-pill bg-danger-subtle text-danger border border-danger-subtle px-3 py-1 fw-semibold">
+                                        <i class="fa-solid fa-circle-xmark me-1"></i> Inactivo
+                                    </span>
+                                @endif
+                            </td>
+                            <td>
                                 <span class="text-muted small">
                                     {{ $usuario->created_at ? $usuario->created_at->format('d/m/Y H:i') : 'N/A' }}
                                 </span>
                             </td>
-                            <td class="text-end pe-4">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-light border btn-action-icon me-1" title="Editar">
-                                        <i class="fa-solid fa-pen text-primary"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-light border btn-action-icon" title="Desactivar">
-                                        <i class="fa-solid fa-trash text-danger"></i>
-                                    </button>
-                                </div>
+
+
+                            <!-- BTN DE ACCIONES -->
+                            <td class="text-center text-nowrap">
+                                <button type="button"
+                                        class="btn btn-sm btn-info"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#verUsuario{{ $usuario->id }}"
+                                        title="Ver usuario">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+
+                                <button type="button"
+                                        class="btn btn-sm btn-warning"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#editarCliente{{ $usuario->id }}"
+                                        title="Editar usuario">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+
+                                <button type="button"
+                                        class="btn btn-sm btn-danger"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#eliminarCliente{{ $usuario->id }}"
+                                        title="Eliminar usuario">
+                                    <i class="bi bi-trash"></i>
+                                </button>
                             </td>
                         </tr>
+
+                        {{-- Modal para ver usuario --}}
+                        <div class="modal fade"
+                            id="verUsuario{{ $usuario->id }}"
+                            tabindex="-1"
+                            aria-hidden="true">
+
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Información del usuario</h5>
+                                        <button type="button"
+                                                class="btn-close"
+                                                data-bs-dismiss="modal"
+                                                aria-label="Cerrar"></button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <p><strong>Nombre:</strong>
+                                            {{ $usuario->name }}</p>
+
+                                        <p><strong>Correo:</strong>
+                                            {{ $usuario->email }}</p>
+
+                                        <p><strong>Rol:</strong>
+                                            {{ $usuario->role?->name ?? 'Sin rol asignado' }}</p>
+
+                                        <p><strong>Estado:</strong>
+                                            @if ($usuario->state)
+                                                <span class="badge rounded-pill bg-success-subtle text-success border border-success-subtle px-3 py-1 fw-semibold">
+                                                    <i class="fa-solid fa-circle-check me-1"></i> Activo
+                                                </span>
+                                            @else
+                                                <span class="badge rounded-pill bg-danger-subtle text-danger border border-danger-subtle px-3 py-1 fw-semibold">
+                                                    <i class="fa-solid fa-circle-xmark me-1"></i> Inactivo
+                                                </span>
+                                            @endif
+                                        </p>
+
+                                        <p><strong>Fecha Registro:</strong>
+                                            {{ $usuario->created_at ? $usuario->created_at->format('d/m/Y H:i') : 'N/A' }}</p>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button"
+                                                class="btn btn-secondary"
+                                                data-bs-dismiss="modal">
+                                            Cerrar
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                     @empty
                         <tr>
-                            <td colspan="5" class="text-center py-5">
+                            <td colspan="6" class="text-center py-5">
                                 <div class="text-muted">
                                     <i class="fa-solid fa-users-slash fs-1 d-block mb-3 text-secondary opacity-50"></i>
                                     <p class="mb-0 fw-semibold">No se encontraron usuarios registrados.</p>
@@ -182,6 +267,16 @@
                                         {{ $rol->name }}
                                     </option>
                                 @endforeach
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="state" class="form-label fw-semibold">
+                                Estado del usuario
+                            </label>
+                            <select class="form-select" id="state" name="state">
+                                <option value="1" selected>Activo</option>
+                                <option value="0">Inactivo</option>
                             </select>
                         </div>
 

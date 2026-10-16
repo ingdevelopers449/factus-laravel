@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\ClienteController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\UsuarioController;
-use App\Http\Controllers\Admin\ClienteController;
 use App\Http\Controllers\Empleado\DashboardController as EmpleadoDashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\EnsureUserHasRole;
@@ -34,13 +34,13 @@ Route::middleware([Authenticate::class, EnsureUserHasRole::class.':admin'])
 
         // RUTA METODO POST DEL MODAL DE CREAR EMPLEADO
         Route::post('/admin/usuario', [
-            \App\Http\Controllers\Admin\UsuarioController::class,
+            UsuarioController::class,
             'store',
         ])->name('usuario.store');
 
         // RUTA METODO POST DEL MODAL DE CREAR CLIENTE
         Route::post('/admin/clientes', [
-            \App\Http\Controllers\Admin\ClienteController::class,
+            ClienteController::class,
             'store',
         ])->name('clientes.store');
 
@@ -52,7 +52,16 @@ Route::middleware([Authenticate::class, EnsureUserHasRole::class.':admin'])
         // BTN DE ACCIÓN ELIMIANR CLIENTE
         Route::delete('clientes/{cliente}', [ClienteController::class, 'destroy'])
             ->name('clientes.destroy');
-            });
+
+        // BTN DE ACCIÓN ACTUALIZAR EMPLEADO
+        Route::put('usuario/{usuario}', [UsuarioController::class,
+            'update',
+        ])->name('usuario.update');
+
+        // BTN DE ACCIÓN ELIMIANR CLIENTE
+        Route::delete('usuario/{usuario}', [UsuarioController::class, 'destroy'])
+            ->name('usuario.destroy');
+    }); // CIERRE DEL MIDDLWARE DE ADMIN
 
 Route::middleware([Authenticate::class, EnsureUserHasRole::class.':empleado'])
     ->prefix('empleado')

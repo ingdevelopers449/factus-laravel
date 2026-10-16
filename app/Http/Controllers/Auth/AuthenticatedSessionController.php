@@ -31,9 +31,9 @@ class AuthenticatedSessionController extends Controller
         $user = $request->user();
 
         $destination = match ($user->role?->code) {
-            'ADMIN'    => route('admin.dashboard'),
+            'ADMIN' => route('admin.dashboard'),
             'EMPLEADO' => route('empleado.dashboard'),
-            default    => null,
+            default => null,
         };
 
         if ($destination === null) {
