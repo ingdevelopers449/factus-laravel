@@ -13,6 +13,9 @@
     <!-- FontAwesome 6.5.0 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="{{ asset('img/favicon.svg') }}">
 
@@ -107,9 +110,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fa-solid fa-users"></i> Clientes
-                    </a>
+                    @if (auth()->user()->role?->code === 'ADMIN')
+                        <a href="{{ route('admin.clientes.index') }}" class="nav-link {{ request()->routeIs('admin.clientes.*') ? 'active' : '' }}">
+                            <i class="fa-solid fa-user-shield"></i> Clientes
+                        </a>
+                    @endif
                 </li>
 
                 <li class="nav-item px-3 mt-4 mb-2 text-white-50 small fw-bold text-uppercase" style="letter-spacing: 1px;">Catálogo</li>

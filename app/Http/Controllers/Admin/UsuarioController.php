@@ -51,7 +51,7 @@ class UsuarioController extends Controller
         // REGRESAR A LA LISTA CON UN MENSAJE
         return redirect()
             ->route('admin.usuario.index')
-            ->with('success', 'Empleado registrado correctamente');
+            ->with('success', 'Empleado registrado correctamente'); 
     }
 
     /**

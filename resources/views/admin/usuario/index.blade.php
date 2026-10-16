@@ -4,30 +4,6 @@
 
 @section('content')
 
-@if (session('success'))
-    <div class="alert alert-success alert-dismissible fade show"
-         role="alert">
-        <i class="fa-solid fa-circle-check me-2"></i>
-        {{ session('success') }}
-
-        <button type="button" class="btn-close"
-                data-bs-dismiss="alert"
-                aria-label="Cerrar"></button>
-    </div>
-@endif
-
-@if ($errors->any())
-    <div class="alert alert-danger" role="alert">
-        <strong>Revisa los siguientes errores:</strong>
-
-        <ul class="mb-0 mt-2">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-
 <div class="container-fluid p-0">
 
     <!-- Encabezado de la Sección -->
@@ -249,5 +225,49 @@
         </div>
     </div>
 </div>
+
+
+@if (session('success'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                icon: 'success',
+                title: '¡Registro exitoso!',
+                text: {{ Illuminate\Support\Js::from(session('success')) }},
+                confirmButtonText: 'Aceptar'
+            });
+        });
+    </script>
+@endif
+
+@if ($errors->any())
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                icon: 'error',
+                title: 'Revisa los datos',
+                text: {{ Illuminate\Support\Js::from($errors->first()) }},
+                confirmButtonText: 'Entendido'
+            });
+        });
+    </script>
+@endif
+
+
+
+@if ($errors->any())
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                icon: 'error',
+                title: 'Revisa los datos',
+                text: {{ Illuminate\Support\Js::from($errors->first()) }},
+                confirmButtonText: 'Entendido',
+                confirmButtonColor: '#d33'
+            });
+        });
+    </script>
+@endif
+
 
 @endsection
