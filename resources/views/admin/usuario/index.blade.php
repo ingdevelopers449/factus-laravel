@@ -76,18 +76,26 @@
                                 <span class="text-secondary small">{{ $usuario->email }}</span>
                             </td>
                             <td>
+                                @php
+                                    $is_admin = strtoupper($usuario->role?->code ?? '') === 'ADMIN';
+
+                                    $badge_class = $is_admin
+                                        ? 'bg-warning text-dark'
+                                        : 'bg-success';
+                                @endphp
+
                                 <span class="badge rounded-pill px-3 py-2 {{ $badge_class }}">
                                     <i class="fa-solid {{ $is_admin ? 'fa-shield-halved' : 'fa-user' }} me-1"></i>
-                                    {{ $usuario->role?->name ?? 'Sin Rol' }}
+                                    {{ $usuario->role?->name ?? 'Sin rol asignado' }}
                                 </span>
                             </td>
                             <td>
                                 @if ($usuario->state)
-                                    <span class="badge rounded-pill bg-success-subtle text-success border border-success-subtle px-3 py-1 fw-semibold">
+                                    <span class="badge bg-success">
                                         <i class="fa-solid fa-circle-check me-1"></i> Activo
                                     </span>
                                 @else
-                                    <span class="badge rounded-pill bg-danger-subtle text-danger border border-danger-subtle px-3 py-1 fw-semibold">
+                                    <span class="badge rounded-pill badge-secondary">
                                         <i class="fa-solid fa-circle-xmark me-1"></i> Inactivo
                                     </span>
                                 @endif
@@ -154,14 +162,18 @@
                                         <p><strong>Rol:</strong>
                                             {{ $usuario->role?->name ?? 'Sin rol asignado' }}</p>
 
-                                        <p><strong>Estado:</strong>
-                                            @if ($usuario->state)
-                                                <span class="badge rounded-pill bg-success-subtle text-success border border-success-subtle px-3 py-1 fw-semibold">
-                                                    <i class="fa-solid fa-circle-check me-1"></i> Activo
+                                        <p>
+                                            <strong>Estado:</strong>
+
+                                            @if ((bool) $usuario->state)
+                                                <span class="badge bg-success">
+                                                    <i class="fa-solid fa-circle-check me-1"></i>
+                                                    Activo
                                                 </span>
                                             @else
-                                                <span class="badge rounded-pill bg-danger-subtle text-danger border border-danger-subtle px-3 py-1 fw-semibold">
-                                                    <i class="fa-solid fa-circle-xmark me-1"></i> Inactivo
+                                                <span class="badge bg-danger">
+                                                    <i class="fa-solid fa-circle-xmark me-1"></i>
+                                                    Inactivo
                                                 </span>
                                             @endif
                                         </p>
@@ -181,6 +193,97 @@
                                 </div>
                             </div>
                         </div>
+
+                        {{-- Modal para editar cliente --}}
+                        <div class="modal fade"
+                            id="editarCliente{{ $cliente->id_cliente }}"
+                            tabindex="-1"
+                            aria-hidden="true">
+
+                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                <div class="modal-content">
+
+                                    <form action="{{ route('admin.usuario.update', $usuario->id) }}"
+                                        method="POST">
+
+                                        @csrf
+                                        @method('PUT')
+
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Editar Empleado</h5>
+                                            <button type="button"
+                                                    class="btn-close"
+                                                    data-bs-dismiss="modal"
+                                                    aria-label="Cerrar"></button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <div class="mb-3">
+                                                <label class="form-label">Identificación *</label>
+                                                <input type="text"
+                                                    name="identificacion"
+                                                    class="form-control"
+                                                    maxlength="20"
+                                                    value="{{ $cliente->identificacion }}"
+                                                    required>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Nombre o razón social *</label>
+                                                <input type="text"
+                                                    name="nombre_razon_social"
+                                                    class="form-control"
+                                                    maxlength="150"
+                                                    value="{{ $cliente->nombre_razon_social }}"
+                                                    required>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Correo electrónico</label>
+                                                <input type="email"
+                                                    name="email"
+                                                    class="form-control"
+                                                    maxlength="150"
+                                                    value="{{ $cliente->email }}">
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Teléfono</label>
+                                                <input type="text"
+                                                    name="telefono"
+                                                    class="form-control"
+                                                    maxlength="20"
+                                                    value="{{ $cliente->telefono }}">
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Dirección</label>
+                                                <input type="text"
+                                                    name="direccion"
+                                                    class="form-control"
+                                                    maxlength="255"
+                                                    value="{{ $cliente->direccion }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button"
+                                                    class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">
+                                                Cancelar
+                                            </button>
+
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="bi bi-save"></i> Guardar cambios
+                                            </button>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+
                     @empty
                         <tr>
                             <td colspan="6" class="text-center py-5">

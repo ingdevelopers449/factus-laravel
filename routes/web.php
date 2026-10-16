@@ -53,12 +53,12 @@ Route::middleware([Authenticate::class, EnsureUserHasRole::class.':admin'])
         Route::delete('clientes/{cliente}', [ClienteController::class, 'destroy'])
             ->name('clientes.destroy');
 
-        // BTN DE ACCIÓN ACTUALIZAR EMPLEADO
+        // BTN DE ACCIÓN ACTUALIZAR EMPLEADO/USUARIO
         Route::put('usuario/{usuario}', [UsuarioController::class,
             'update',
         ])->name('usuario.update');
 
-        // BTN DE ACCIÓN ELIMIANR CLIENTE
+        // BTN DE ACCIÓN ELIMIANAR EMPLEADO/USUARIO
         Route::delete('usuario/{usuario}', [UsuarioController::class, 'destroy'])
             ->name('usuario.destroy');
     }); // CIERRE DEL MIDDLWARE DE ADMIN
