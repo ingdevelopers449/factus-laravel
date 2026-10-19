@@ -10,14 +10,17 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\EnsureUserHasRole;
 use App\Models\Categoria;
 use Illuminate\Auth\Middleware\Authenticate;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return match (auth()->user()?->role?->code) {
+Route::get('/dashboard', function (Request $request) {
+    $roleCode = strtolower((string) $request->user()?->role?->code);
+
+    return match ($roleCode) {
         'admin' => redirect()->route('admin.dashboard'),
         'empleado' => redirect()->route('empleado.dashboard'),
         default => redirect()->route('login'),
