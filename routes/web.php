@@ -1,15 +1,16 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoriaController;
 use App\Http\Controllers\Admin\ClienteController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\ProductoController;
 use App\Http\Controllers\Admin\UsuarioController;
-use App\Http\Controllers\Admin\CategoriaController;
 use App\Http\Controllers\Empleado\DashboardController as EmpleadoDashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\EnsureUserHasRole;
+use App\Models\Categoria;
 use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
-use App\Models\Categoria;
 
 Route::get('/', function () {
     return view('welcome');
@@ -29,16 +30,26 @@ Route::middleware([Authenticate::class, EnsureUserHasRole::class.':admin'])
     ->group(function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])
             ->name('dashboard');
-        
+
         // RUTA VISTA GESTION DE USUARIO
         Route::get('/usuario', [UsuarioController::class, 'index'])
             ->name('usuario.index');
         // RUTA VISTA DE GESTION DE CLIENTES
-        Route::get('/clientes', [ClienteController::class, 'index'])
+        Route::get('/cliente', [ClienteController::class, 'index'])
             ->name('clientes.index');
         // RUTA VISTA DE CATEGORIAS
         Route::get('/categorias', [CategoriaController::class, 'index'])
             ->name('categorias.index');
+
+        // RUTAS DE MODULO PRODUCTOS
+        Route::get('/producto', [ProductoController::class, 'index'])
+            ->name('producto.index');
+        Route::post('/producto', [ProductoController::class, 'store'])
+            ->name('producto.store');
+        Route::put('/producto/{producto}', [ProductoController::class, 'update'])
+            ->name('producto.update');
+        Route::delete('/producto/{producto}', [ProductoController::class, 'destroy'])
+            ->name('producto.destroy');
 
         // RUTA METODO POST DEL MODAL DE CREAR EMPLEADO
         Route::post('/admin/usuario', [
@@ -69,7 +80,7 @@ Route::middleware([Authenticate::class, EnsureUserHasRole::class.':admin'])
         // BTN DE ACCIÓN ELIMIANAR EMPLEADO/USUARIO
         Route::delete('usuario/{usuario}', [UsuarioController::class, 'destroy'])
             ->name('usuario.destroy');
-        
+
         // RUTA STORE CATEGORIA
         Route::post('/categorias', [CategoriaController::class, 'store'])
             ->name('categorias.store');
@@ -77,7 +88,7 @@ Route::middleware([Authenticate::class, EnsureUserHasRole::class.':admin'])
         // RUTA UPDATE CATEGORIA
         Route::put('/categorias/{id}', [CategoriaController::class, 'update'])
             ->name('categorias.update');
-        
+
         // RUTA STORE CATEGORIA
         Route::delete('/categorias/{id}', [CategoriaController::class, 'destroy'])
             ->name('categorias.destroy');

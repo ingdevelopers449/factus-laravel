@@ -60,7 +60,15 @@
                 ['icono' => 'fa-box-open', 'label' => 'Catálogo'],
                 ['icono' => 'fa-tags', 'label' => 'Categorías']
             ],
+            'admin.categorias.index' => [
+                ['icono' => 'fa-box-open', 'label' => 'Catálogo'],
+                ['icono' => 'fa-tags', 'label' => 'Categorías']
+            ],
             'admin.productos' => [
+                ['icono' => 'fa-box-open', 'label' => 'Catálogo'],
+                ['icono' => 'fa-box-open', 'label' => 'Productos']
+            ],
+            'admin.producto.index' => [
                 ['icono' => 'fa-box-open', 'label' => 'Catálogo'],
                 ['icono' => 'fa-box-open', 'label' => 'Productos']
             ],
@@ -126,7 +134,7 @@
                 <li class="nav-item">
                     @if (auth()->user()->role?->code === 'ADMIN')
                         <a href="{{ route('admin.clientes.index') }}" class="nav-link {{ request()->routeIs('admin.clientes.*') ? 'active' : '' }}">
-                            <i class="fa-solid fa-chart-pie"></i> Clientes
+                            <i class="fa-solid fa-users"></i> Clientes
                         </a>
                     @endif
                 </li>
@@ -135,14 +143,16 @@
                 <li class="nav-item">
                     @if (auth()->user()->role?->code === 'ADMIN')
                         <a href="{{ route('admin.categorias.index') }}" class="nav-link {{ request()->routeIs('admin.categorias.*') ? 'active' : '' }}">
-                            <i class="fa-solid fa-chart-pie"></i> Categorias
+                            <i class="fa-solid fa-tags"></i> Categorías
                         </a>
                     @endif
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fa-solid fa-box-open"></i> Productos
-                    </a>
+                    @if (auth()->user()->role?->code === 'ADMIN')
+                        <a href="{{ route('admin.producto.index') }}" class="nav-link {{ request()->routeIs('admin.producto.*') ? 'active' : '' }}">
+                            <i class="fa-solid fa-box-open"></i> Productos
+                        </a>
+                    @endif
                 </li>
 
                 <li class="nav-item px-3 mt-4 mb-2 text-white-50 small fw-bold text-uppercase" style="letter-spacing: 1px;">Administración</li>

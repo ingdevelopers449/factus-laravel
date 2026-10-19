@@ -16,7 +16,7 @@ class Categoria extends Model
         'state',
     ];
 
-    protected function casts(): Array
+    protected function casts(): array
     {
         return [
             'state' => 'boolean',
