@@ -201,7 +201,7 @@
                             <div class="modal-dialog modal-lg modal-dialog-centered">
                                 <div class="modal-content">
 
-                                    <form action="{{ route('admin.usuario.update', $usuario->id) }}"
+                                    <form action="{{ route('usuario.update', $usuario->id) }}"
                                         method="POST">
 
                                         @csrf
@@ -357,7 +357,7 @@
             
             <div class="modal-body p-4">
                 <form id="formNuevoEmpleado"
-                    action="{{ route('admin.usuario.store') }}"
+                    action="{{ route('usuario.store') }}"
                     method="POST">
                     @csrf
                         <div class="mb-3">

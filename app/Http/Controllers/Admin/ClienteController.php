@@ -52,7 +52,7 @@ class ClienteController extends Controller
         Cliente::create($datos);
 
         return redirect()
-            ->route('admin.clientes.index')
+            ->route('clientes.index')
             ->with('success', 'Cliente registrado correctamente.');
     }
 
@@ -85,7 +85,7 @@ class ClienteController extends Controller
 
         // Regresar al listado con mensaje de éxito
         return redirect()
-            ->route('admin.clientes.index')
+            ->route('clientes.index')
             ->with('success', 'Cliente actualizado correctamente.');
     }
 
@@ -94,7 +94,7 @@ class ClienteController extends Controller
         $cliente->delete();
 
         return redirect()
-            ->route('admin.clientes.index')
+            ->route('clientes.index')
             ->with('success', 'Cliente eliminado correctamente.');
     }
 }

@@ -67,7 +67,7 @@ class ProductoController extends Controller
         Producto::create($datos);
 
         return redirect()
-            ->route('admin.producto.index')
+            ->route('producto.index')
             ->with('success', 'Producto creado correctamente.');
     }
 
@@ -109,7 +109,7 @@ class ProductoController extends Controller
         $producto->update($datos);
 
         return redirect()
-            ->route('admin.producto.index')
+            ->route('producto.index')
             ->with('success', 'Producto actualizado correctamente.');
     }
 
@@ -123,7 +123,7 @@ class ProductoController extends Controller
         $producto->delete();
 
         return redirect()
-            ->route('admin.producto.index')
+            ->route('producto.index')
             ->with('success', 'Producto eliminado correctamente.');
     }
 }

@@ -56,7 +56,7 @@ class UsuarioController extends Controller
 
         // REGRESAR A LA LISTA CON UN MENSAJE
         return redirect()
-            ->route('admin.usuario.index')
+            ->route('usuario.index')
             ->with('success', 'Empleado registrado correctamente');
     }
 
@@ -103,7 +103,7 @@ class UsuarioController extends Controller
         $usuario->update($datos);
 
         return redirect()
-            ->route('admin.usuario.index')
+            ->route('usuario.index')
             ->with('success', 'Usuario actualizado correctamente');
     }
 
@@ -115,7 +115,7 @@ class UsuarioController extends Controller
         $usuario->delete();
 
         return redirect()
-            ->route('admin.usuario.index')
+            ->route('usuario.index')
             ->with('success', 'Usuario eliminado correctamente');
     }
 }

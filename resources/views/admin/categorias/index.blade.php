@@ -57,7 +57,7 @@
                 </div>
 
                 {{-- Buscador Integrado --}}
-                <form action="{{ route('admin.categorias.index') }}" method="GET" class="m-0" style="min-width: 280px; max-width: 420px; width: 100%;">
+                <form action="{{ route('categorias.index') }}" method="GET" class="m-0" style="min-width: 280px; max-width: 420px; width: 100%;">
                     <div class="input-group">
                         <span class="input-group-text bg-light border-end-0 text-muted">
                             <i class="fa-solid fa-magnifying-glass"></i>
@@ -71,7 +71,7 @@
                             Buscar
                         </button>
                         @if ($buscar ?? request('buscar'))
-                            <a href="{{ route('admin.categorias.index') }}" class="btn btn-light border" title="Limpiar búsqueda">
+                            <a href="{{ route('categorias.index') }}" class="btn btn-light border" title="Limpiar búsqueda">
                                 <i class="fa-solid fa-xmark text-secondary"></i>
                             </a>
                         @endif
@@ -148,7 +148,7 @@
                                 </div>
 
                                 <form id="formEliminarCategoria{{ $categoria->id_categoria }}"
-                                      action="{{ route('admin.categorias.destroy', $categoria->id_categoria) }}"
+                                      action="{{ route('categorias.destroy', $categoria->id_categoria) }}"
                                       method="POST"
                                       class="d-none">
                                     @csrf
@@ -165,7 +165,7 @@
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content border-0 rounded-4 shadow">
 
-                                    <form action="{{ route('admin.categorias.update', $categoria->id_categoria) }}"
+                                    <form action="{{ route('categorias.update', $categoria->id_categoria) }}"
                                           method="POST">
                                         @csrf
                                         @method('PUT')
@@ -263,7 +263,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 rounded-4 shadow">
 
-            <form action="{{ route('admin.categorias.store') }}" method="POST">
+            <form action="{{ route('categorias.store') }}" method="POST">
                 @csrf
 
                 <div class="modal-header border-bottom px-4 py-3">

@@ -70,7 +70,7 @@
                 </div>
 
                 {{-- Buscador Integrado --}}
-                <form action="{{ route('admin.producto.index') }}" method="GET" class="m-0" style="min-width: 280px; max-width: 420px; width: 100%;">
+                <form action="{{ route('producto.index') }}" method="GET" class="m-0" style="min-width: 280px; max-width: 420px; width: 100%;">
                     <div class="input-group">
                         <span class="input-group-text bg-light border-end-0 text-muted">
                             <i class="fa-solid fa-magnifying-glass"></i>
@@ -84,7 +84,7 @@
                             Buscar
                         </button>
                         @if (request('buscar'))
-                            <a href="{{ route('admin.producto.index') }}" class="btn btn-light border" title="Limpiar búsqueda">
+                            <a href="{{ route('producto.index') }}" class="btn btn-light border" title="Limpiar búsqueda">
                                 <i class="fa-solid fa-xmark text-secondary"></i>
                             </a>
                         @endif
@@ -239,7 +239,7 @@
 
                                 {{-- Formulario oculto para eliminar --}}
                                 <form id="formEliminarProducto{{ $producto->id }}"
-                                      action="{{ route('admin.producto.destroy', $producto->id) }}"
+                                      action="{{ route('producto.destroy', $producto->id) }}"
                                       method="POST"
                                       class="d-none">
                                     @csrf
@@ -401,7 +401,7 @@
                             <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
                                 <div class="modal-content border-0 rounded-4 shadow">
 
-                                    <form action="{{ route('admin.producto.update', $producto->id) }}" method="POST">
+                                    <form action="{{ route('producto.update', $producto->id) }}" method="POST">
                                         @csrf
                                         @method('PUT')
 
@@ -607,7 +607,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content border-0 rounded-4 shadow">
 
-            <form action="{{ route('admin.producto.store') }}" method="POST">
+            <form action="{{ route('producto.store') }}" method="POST">
                 @csrf
 
                 <div class="modal-header border-bottom px-4 py-3">

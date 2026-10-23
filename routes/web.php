@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CategoriaController;
 use App\Http\Controllers\Admin\ClienteController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\ProductoController;
+use App\Http\Controllers\Admin\EmpresaController;
 use App\Http\Controllers\Admin\UsuarioController;
 use App\Http\Controllers\Empleado\DashboardController as EmpleadoDashboardController;
 use App\Http\Controllers\ProfileController;
@@ -29,10 +30,9 @@ Route::get('/dashboard', function (Request $request) {
 
 Route::middleware([Authenticate::class, EnsureUserHasRole::class.':admin'])
     ->prefix('admin')
-    ->name('admin.')
     ->group(function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])
-            ->name('dashboard');
+            ->name('admin.dashboard');
 
         // RUTA VISTA GESTION DE USUARIO
         Route::get('/usuario', [UsuarioController::class, 'index'])
@@ -43,6 +43,9 @@ Route::middleware([Authenticate::class, EnsureUserHasRole::class.':admin'])
         // RUTA VISTA DE CATEGORIAS
         Route::get('/categorias', [CategoriaController::class, 'index'])
             ->name('categorias.index');
+        // RUTA VISTA DE EMPRESA
+        Route::get('/empresas', [EmpresaController::class, 'index'])
+            ->name('empresas.index');
 
         // RUTAS DE MODULO PRODUCTOS
         Route::get('/producto', [ProductoController::class, 'index'])
@@ -55,13 +58,13 @@ Route::middleware([Authenticate::class, EnsureUserHasRole::class.':admin'])
             ->name('producto.destroy');
 
         // RUTA METODO POST DEL MODAL DE CREAR EMPLEADO
-        Route::post('/admin/usuario', [
+        Route::post('/usuario', [
             UsuarioController::class,
             'store',
         ])->name('usuario.store');
 
         // RUTA METODO POST DEL MODAL DE CREAR CLIENTE
-        Route::post('/admin/clientes', [
+        Route::post('/clientes', [
             ClienteController::class,
             'store',
         ])->name('clientes.store');

@@ -21,9 +21,12 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 - Use descriptive names for variables and methods. For example, `isRegisteredForDiscounts`, not `discount()`.
 - Check for existing components to reuse before writing a new one.
 
-## Verification Scripts
+## Verification Policy
 
-- Do not create verification scripts or tinker when tests cover that functionality and prove they work. Unit and feature tests are more important.
+- Do NOT execute console commands to perform verifications or tests. The agent is strictly prohibited from running verification commands in the console.
+- All verification, testing, and validation is performed exclusively by the programmer using the framework's native commands (e.g. `php artisan test`, `vendor/bin/phpunit`, etc.).
+- When changes require verification, specify and provide the exact native framework command for the programmer to execute manually.
+- Do not create verification scripts or custom tinker scripts when native tests cover that functionality.
 
 ## Application Structure & Architecture
 
@@ -104,7 +107,7 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 
 - Add or update tests for behavior and logic changes when a test provides meaningful regression coverage.
 - Pure copy, styling, and layout-only changes do not require new or updated tests.
-- When test coverage applies, run the affected tests and ensure they pass.
+- When test coverage applies, specify the exact command (e.g. `php artisan test --filter=...`) for the developer to run and verify. Do not execute test commands automatically.
 - Test the changed behavior and its important failure modes, but do not add tests beyond them.
 - Read the `testing-best-practices` skill before writing tests.
 

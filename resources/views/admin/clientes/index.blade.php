@@ -54,7 +54,7 @@
                 </div>
 
                 {{-- Buscador Integrado --}}
-                <form action="{{ route('admin.clientes.index') }}" method="GET" class="m-0" style="min-width: 280px; max-width: 420px; width: 100%;">
+                <form action="{{ route('clientes.index') }}" method="GET" class="m-0" style="min-width: 280px; max-width: 420px; width: 100%;">
                     <div class="input-group">
                         <span class="input-group-text bg-light border-end-0 text-muted">
                             <i class="fa-solid fa-magnifying-glass"></i>
@@ -68,7 +68,7 @@
                             Buscar
                         </button>
                         @if ($buscar)
-                            <a href="{{ route('admin.clientes.index') }}" class="btn btn-light border" title="Limpiar búsqueda">
+                            <a href="{{ route('clientes.index') }}" class="btn btn-light border" title="Limpiar búsqueda">
                                 <i class="fa-solid fa-xmark text-secondary"></i>
                             </a>
                         @endif
@@ -205,7 +205,7 @@
                             <div class="modal-dialog modal-lg modal-dialog-centered">
                                 <div class="modal-content">
 
-                                    <form action="{{ route('admin.clientes.update', $cliente->id_cliente) }}"
+                                    <form action="{{ route('clientes.update', $cliente->id_cliente) }}"
                                         method="POST">
 
                                         @csrf
@@ -295,7 +295,7 @@
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
 
-                                    <form action="{{ route('admin.clientes.destroy', $cliente->id_cliente) }}"
+                                    <form action="{{ route('clientes.destroy', $cliente->id_cliente) }}"
                                         method="POST">
 
                                         @csrf
@@ -397,7 +397,7 @@
 
             {{-- Formulario --}}
             <form id="formNuevoCliente"
-                  action="{{ route('admin.clientes.store') }}"
+                  action="{{ route('clientes.store') }}"
                   method="POST">
                 @csrf
 
