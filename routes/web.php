@@ -46,6 +46,8 @@ Route::middleware([Authenticate::class, EnsureUserHasRole::class.':admin'])
         // RUTA VISTA DE EMPRESA
         Route::get('/empresas', [EmpresaController::class, 'index'])
             ->name('empresas.index');
+        Route::match(['post', 'put'], '/empresas', [EmpresaController::class, 'update'])
+            ->name('empresas.update');
 
         // RUTAS DE MODULO PRODUCTOS
         Route::get('/producto', [ProductoController::class, 'index'])

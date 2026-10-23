@@ -44,49 +44,65 @@
             'dashboard' => [
                 ['icono' => 'fa-chart-pie', 'label' => 'Dashboard']
             ],
+            'facturas' => [
+                ['icono' => 'fa-file-invoice-dollar', 'label' => 'Ventas'],
+                ['icono' => 'fa-cash-register', 'label' => 'Facturación POS']
+            ],
             'admin.facturas' => [
                 ['icono' => 'fa-file-invoice-dollar', 'label' => 'Ventas'],
                 ['icono' => 'fa-cash-register', 'label' => 'Facturación POS']
             ],
-            'admin.clientes' => [
+            'clientes' => [
                 ['icono' => 'fa-file-invoice-dollar', 'label' => 'Ventas'],
                 ['icono' => 'fa-users', 'label' => 'Clientes']
             ],
-            'admin.clientes.index' => [
+            'clientes.index' => [
                 ['icono' => 'fa-file-invoice-dollar', 'label' => 'Ventas'],
                 ['icono' => 'fa-users', 'label' => 'Clientes']
             ],
-            'admin.categorias' => [
+            'categorias' => [
                 ['icono' => 'fa-box-open', 'label' => 'Catálogo'],
                 ['icono' => 'fa-tags', 'label' => 'Categorías']
             ],
-            'admin.categorias.index' => [
+            'categorias.index' => [
                 ['icono' => 'fa-box-open', 'label' => 'Catálogo'],
                 ['icono' => 'fa-tags', 'label' => 'Categorías']
             ],
-            'admin.productos' => [
+            'producto' => [
                 ['icono' => 'fa-box-open', 'label' => 'Catálogo'],
                 ['icono' => 'fa-box-open', 'label' => 'Productos']
             ],
-            'admin.producto.index' => [
+            'producto.index' => [
                 ['icono' => 'fa-box-open', 'label' => 'Catálogo'],
                 ['icono' => 'fa-box-open', 'label' => 'Productos']
             ],
-            'admin.empleados' => [
+            'usuario' => [
                 ['icono' => 'fa-user-shield', 'label' => 'Administración'],
                 ['icono' => 'fa-user-shield', 'label' => 'Empleados']
             ],
-            'admin.usuario.index' => [
+            'usuario.index' => [
                 ['icono' => 'fa-user-shield', 'label' => 'Administración'],
                 ['icono' => 'fa-user-shield', 'label' => 'Empleados']
             ],
-            'admin.empresa' => [
+            'empresas' => [
                 ['icono' => 'fa-building', 'label' => 'Administración'],
                 ['icono' => 'fa-building', 'label' => 'Empresa']
+            ],
+            'empresas.index' => [
+                ['icono' => 'fa-building', 'label' => 'Administración'],
+                ['icono' => 'fa-building', 'label' => 'Empresa']
+            ],
+            'parametrizacion' => [
+                ['icono' => 'fa-building-columns', 'label' => 'Administración'],
+                ['icono' => 'fa-building-columns', 'label' => 'Parametrización DIAN']
             ],
             'admin.parametrizacion' => [
                 ['icono' => 'fa-building-columns', 'label' => 'Administración'],
                 ['icono' => 'fa-building-columns', 'label' => 'Parametrización DIAN']
+            ],
+            'rentabilidad' => [
+                ['icono' => 'fa-chart-line', 'label' => 'Reportes'],
+                ['icono' => 'fa-chart-line', 'label' => 'Ventas y Rentabilidad']
             ],
             'admin.rentabilidad' => [
                 ['icono' => 'fa-chart-line', 'label' => 'Reportes'],

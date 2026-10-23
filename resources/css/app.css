@@ -1245,4 +1245,39 @@ body.ticket-pos {
     border-color: #dc2626;
 }
 
+/* --- Módulo de Empresa --- */
+.empresa-logo-preview-box {
+    width: 140px;
+    height: 140px;
+    border-radius: 1rem;
+    background: #f8fafc;
+    border: 2px dashed #cbd5e1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin: 0 auto;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.empresa-logo-preview-box:hover {
+    border-color: #3b82f6;
+    background: #eff6ff;
+}
+
+.empresa-logo-preview-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 8px;
+}
+
+.badge-soft-primary {
+    background-color: #eff6ff;
+    color: #2563eb;
+    border: 1px solid #bfdbfe;
+}
+
+
 

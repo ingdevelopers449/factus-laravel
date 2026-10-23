@@ -1,65 +1,70 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use App\Models\Empresa;
+
 use App\Http\Controllers\Controller;
+use App\Models\Empresa;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\View\View;
 
 class EmpresaController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muestra la vista principal con los datos de la empresa.
      */
-    public function index()
+    public function index(): View
     {
-        return view('admin.empresas.index');
+        $empresa = Empresa::first();
+
+        return view('admin.empresas.index', compact('empresa'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Guarda o actualiza los datos de la empresa.
      */
-    public function create()
+    public function update(Request $request): RedirectResponse
     {
-        //
-    }
+        $empresa = Empresa::first();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $rules = [
+            'nit' => [
+                'required',
+                'string',
+                'max:30',
+                $empresa
+                    ? Rule::unique('empresa', 'nit')->ignore($empresa->id_empresa, 'id_empresa')
+                    : 'unique:empresa,nit',
+            ],
+            'razon_social' => ['required', 'string', 'max:200'],
+            'direccion' => ['nullable', 'string', 'max:255'],
+            'telefono' => ['nullable', 'string', 'max:30'],
+            'email' => ['nullable', 'email', 'max:150'],
+            'logo_url' => ['nullable', 'string', 'max:500'],
+            'logo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp,svg', 'max:2048'],
+        ];
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        $datos = $request->validate($rules);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        // Si se subió un archivo de logo nuevo
+        if ($request->hasFile('logo')) {
+            $archivo = $request->file('logo');
+            $nombreArchivo = 'logo_empresa_' . time() . '.' . $archivo->getClientOriginalExtension();
+            $ruta = $archivo->storeAs('empresa', $nombreArchivo, 'public');
+            $datos['logo_url'] = '/storage/' . $ruta;
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        unset($datos['logo']);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        if ($empresa) {
+            $empresa->update($datos);
+        } else {
+            Empresa::create($datos);
+        }
+
+        return redirect()
+            ->route('empresas.index')
+            ->with('success', 'Datos de la empresa guardados correctamente.');
     }
 }
