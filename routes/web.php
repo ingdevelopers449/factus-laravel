@@ -3,8 +3,8 @@
 use App\Http\Controllers\Admin\CategoriaController;
 use App\Http\Controllers\Admin\ClienteController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
-use App\Http\Controllers\Admin\ProductoController;
 use App\Http\Controllers\Admin\EmpresaController;
+use App\Http\Controllers\Admin\ProductoController;
 use App\Http\Controllers\Admin\UsuarioController;
 use App\Http\Controllers\Empleado\DashboardController as EmpleadoDashboardController;
 use App\Http\Controllers\ProfileController;

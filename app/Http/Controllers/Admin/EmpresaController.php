@@ -50,9 +50,9 @@ class EmpresaController extends Controller
         // Si se subió un archivo de logo nuevo
         if ($request->hasFile('logo')) {
             $archivo = $request->file('logo');
-            $nombreArchivo = 'logo_empresa_' . time() . '.' . $archivo->getClientOriginalExtension();
+            $nombreArchivo = 'logo_empresa_'.time().'.'.$archivo->getClientOriginalExtension();
             $ruta = $archivo->storeAs('empresa', $nombreArchivo, 'public');
-            $datos['logo_url'] = '/storage/' . $ruta;
+            $datos['logo_url'] = '/storage/'.$ruta;
         }
 
         unset($datos['logo']);

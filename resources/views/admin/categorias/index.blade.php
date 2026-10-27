@@ -125,7 +125,7 @@
 
                             <td>
                                 <span class="text-muted small">
-                                    {{ $categoria->created_at?->format('d/m/Y') ?? '—' }}
+                                    {{ ($categoria->fecha_creacion ?? $categoria->created_at)?->format('d/m/Y') ?? '—' }}
                                 </span>
                             </td>
 
