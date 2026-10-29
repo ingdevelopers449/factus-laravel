@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="admin-html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,7 +25,7 @@
 
     @yield('css')
 </head>
-<body>
+<body class="admin-body">
     @php
         $user = Auth::user();
         $usuario_nombre = $user?->name ?? 'Usuario';
@@ -225,7 +225,7 @@
         <div class="app-main flex-grow-1 d-flex flex-column overflow-hidden">
 
             <!-- Topbar Original (Blanco con Breadcrumbs y Menú de Usuario) -->
-            <header class="app-topbar d-flex justify-content-between align-items-center px-4 bg-white border-bottom shadow-sm z-1" style="height: 80px; min-height: 80px;">
+            <header class="app-topbar d-flex justify-content-between align-items-center px-4 bg-white border-bottom shadow-sm z-1 flex-shrink-0" style="height: 80px; min-height: 80px;">
                 <!-- Botón toggle sidebar móvil -->
                 <button class="btn btn-light d-md-none me-2" id="toggleSidebar">
                     <i class="fa-solid fa-bars"></i>

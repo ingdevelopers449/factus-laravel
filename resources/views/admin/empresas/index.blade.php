@@ -251,28 +251,6 @@
                                     <div class="text-danger small mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
-
-                            {{-- URL de Logo externa (opcional) --}}
-                            <div class="col-12">
-                                <label for="logo_url" class="form-label fw-semibold text-dark small">
-                                    URL Externa del Logo <span class="text-muted fw-normal">(Opcional si usas imagen alojada en CDN o nube)</span>
-                                </label>
-                                <div class="input-group">
-                                    <span class="input-group-text bg-light text-muted border-end-0">
-                                        <i class="fa-solid fa-link"></i>
-                                    </span>
-                                    <input type="text"
-                                           class="form-control bg-light border-start-0 ps-0 @error('logo_url') is-invalid @enderror"
-                                           id="logo_url"
-                                           name="logo_url"
-                                           placeholder="https://ejemplo.com/logo.png"
-                                           value="{{ old('logo_url', $empresa?->logo_url) }}">
-                                </div>
-                                @error('logo_url')
-                                    <div class="text-danger small mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
                         </div>
                     </div>
 
