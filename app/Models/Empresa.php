@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Empresa extends Model
 {
@@ -43,4 +44,12 @@ class Empresa extends Model
         'email',
         'logo_url',
     ];
+
+    /**
+     * Resoluciones DIAN pertenecientes a la empresa.
+     */
+    public function resoluciones(): HasMany
+    {
+        return $this->hasMany(Resolucion::class, 'id_empresa', 'id_empresa');
+    }
 }

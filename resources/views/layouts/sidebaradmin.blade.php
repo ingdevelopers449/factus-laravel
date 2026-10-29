@@ -188,9 +188,11 @@
                     @endif
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fa-solid fa-building-columns"></i> Parametrización DIAN
-                    </a>
+                    @if (auth()->user()->role?->code === 'admin')
+                        <a href="{{ route('parametrizacion.index') }}" class="nav-link {{ request()->routeIs('parametrizacion.*') ? 'active' : '' }}">
+                            <i class="fa-solid fa-building-columns"></i> Parametrización DIAN
+                        </a>
+                    @endif    
                 </li>
                 <li class="nav-item px-3 mt-4 mb-2 text-white-50 small fw-bold text-uppercase" style="letter-spacing: 1px;">REPORTES</li>
                 <li class="nav-item">

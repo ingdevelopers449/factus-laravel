@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CategoriaController;
 use App\Http\Controllers\Admin\ClienteController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\EmpresaController;
+use App\Http\Controllers\Admin\ParametrizacionController;
 use App\Http\Controllers\Admin\ProductoController;
 use App\Http\Controllers\Admin\UsuarioController;
 use App\Http\Controllers\Empleado\DashboardController as EmpleadoDashboardController;
@@ -48,6 +49,18 @@ Route::middleware([Authenticate::class, EnsureUserHasRole::class.':admin'])
             ->name('empresas.index');
         Route::match(['post', 'put'], '/empresas', [EmpresaController::class, 'update'])
             ->name('empresas.update');
+
+        // RUTAS DE PARAMETRIZACION DIAN
+        Route::get('/parametrizacion', [ParametrizacionController::class, 'index'])
+            ->name('parametrizacion.index');
+        Route::post('/parametrizacion', [ParametrizacionController::class, 'store'])
+            ->name('parametrizacion.store');
+        Route::put('/parametrizacion/{id}', [ParametrizacionController::class, 'update'])
+            ->name('parametrizacion.update');
+        Route::delete('/parametrizacion/{id}', [ParametrizacionController::class, 'destroy'])
+            ->name('parametrizacion.destroy');
+        Route::patch('/parametrizacion/{id}/toggle-estado', [ParametrizacionController::class, 'toggleEstado'])
+            ->name('parametrizacion.toggleEstado');
 
         // RUTAS DE MODULO PRODUCTOS
         Route::get('/producto', [ProductoController::class, 'index'])
