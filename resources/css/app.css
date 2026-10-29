@@ -478,7 +478,7 @@ footer {
     color: white;
 }
 
-/* --- Dashboard App Layout (FactuWeb PRO) --- */
+/* --- Dashboard App Layout - Hover Expandable Sidebar (FactuWeb PRO) --- */
 .app-container {
     position: fixed;
     top: 0;
@@ -497,37 +497,81 @@ footer {
     z-index: 1;
 }
 
-.app-sidebar {
-    width: 260px;
-    min-width: 260px;
-    max-width: 260px;
-    height: 100% !important;
-    max-height: 100% !important;
-    flex-shrink: 0;
-    background: linear-gradient(135deg, #0b1120 0%, #171033 100%);
-    display: flex;
-    flex-direction: column;
-    border-right: 1px solid rgba(255, 255, 255, 0.08);
-    z-index: 1040;
-    overflow: hidden;
-    transition: transform 0.3s ease;
+/* Sidebar en Desktop: Modo compacto por defecto (78px), expande a 260px al acercar el mouse */
+@media (min-width: 769px) {
+    .app-sidebar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 78px;
+        min-width: 78px;
+        max-width: 78px;
+        height: 100% !important;
+        background: linear-gradient(135deg, #0b1120 0%, #171033 100%);
+        display: flex;
+        flex-direction: column;
+        border-right: 1px solid rgba(255, 255, 255, 0.08);
+        z-index: 1045;
+        overflow: hidden;
+        transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+    }
+
+    .app-sidebar:hover {
+        width: 260px;
+        min-width: 260px;
+        max-width: 260px;
+        box-shadow: 15px 0 35px rgba(0, 0, 0, 0.5) !important;
+    }
+
+    /* El contenedor principal reserva los 78px para evitar saltos de pantalla */
+    .app-main {
+        margin-left: 78px;
+        width: calc(100% - 78px);
+        flex: 1 1 auto;
+        min-width: 0;
+        height: 100%;
+        max-height: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        position: relative;
+    }
 }
 
+/* Cabecera / Marca del Sidebar */
 .sidebar-brand {
     height: 80px;
     min-height: 80px;
     flex-shrink: 0;
 }
 
-.sidebar-brand img,
-.logo-sidebar {
-    height: 48px !important;
-    width: auto !important;
-    max-width: 220px;
-    object-fit: contain;
-    display: inline-block;
+.sidebar-logo-mini {
+    display: block;
+    height: 38px;
+    width: auto;
+    transition: opacity 0.2s ease;
 }
 
+.sidebar-logo-full {
+    display: none;
+    height: 48px;
+    width: auto;
+    max-width: 210px;
+    object-fit: contain;
+    transition: opacity 0.2s ease;
+}
+
+@media (min-width: 769px) {
+    .app-sidebar:hover .sidebar-logo-mini {
+        display: none !important;
+    }
+    .app-sidebar:hover .sidebar-logo-full {
+        display: block !important;
+    }
+}
+
+/* Lista de Navegación */
 .sidebar-nav {
     flex-grow: 1;
     overflow-y: auto !important;
@@ -553,33 +597,127 @@ footer {
 
 .sidebar-nav .nav-link {
     color: #94a3b8;
-    padding: 0.7rem 1.5rem;
+    padding: 0.75rem 1.4rem;
     font-weight: var(--fw-medium);
     font-size: var(--text-sm);
     display: flex;
     align-items: center;
     border-left: 4px solid transparent;
-    transition: all 0.2s;
+    transition: background-color 0.2s, color 0.2s, border-left-color 0.2s;
     text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
 }
+
 .sidebar-nav .nav-link i {
     width: 24px;
-    margin-right: 12px;
-    font-size: 1.1rem;
+    min-width: 24px;
+    font-size: 1.15rem;
     text-align: center;
+    flex-shrink: 0;
+    transition: color 0.2s;
 }
+
 .sidebar-nav .nav-link:hover {
     color: #ffffff;
     background: rgba(255, 255, 255, 0.05);
 }
+
 .sidebar-nav .nav-link.active {
     color: #ffffff;
     background: rgba(255, 255, 255, 0.08);
     border-left-color: #f59e0b;
     font-weight: 700;
 }
+
 .sidebar-nav .nav-link.active i {
     color: #f59e0b;
+}
+
+/* Textos de los Enlaces: Ocultos en modo compacto, visibles al pasar el mouse */
+.sidebar-nav .nav-link .nav-text {
+    margin-left: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none;
+}
+
+@media (min-width: 769px) {
+    .app-sidebar:hover .sidebar-nav .nav-link .nav-text {
+        opacity: 1;
+        transform: translateX(0);
+        pointer-events: auto;
+        transition: opacity 0.25s ease 0.08s, transform 0.25s ease 0.08s;
+    }
+}
+
+/* Encabezados de sección (Ventas, Catálogo, Administración, etc.) */
+.sidebar-heading {
+    white-space: nowrap;
+    overflow: hidden;
+    transition: all 0.25s ease;
+}
+
+@media (min-width: 769px) {
+    .app-sidebar .sidebar-heading {
+        opacity: 0.3;
+        height: 14px;
+        margin-top: 14px !important;
+        margin-bottom: 8px !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 0 !important;
+    }
+    .app-sidebar .sidebar-heading .heading-text {
+        display: none;
+    }
+    .app-sidebar:hover .sidebar-heading {
+        opacity: 1;
+        height: auto;
+        margin-top: 1.5rem !important;
+        margin-bottom: 0.5rem !important;
+        border-top: none;
+        padding: 0 1rem !important;
+    }
+    .app-sidebar:hover .sidebar-heading .heading-text {
+        display: inline-block;
+        transition: opacity 0.25s ease 0.08s;
+    }
+}
+
+/* Tarjeta de usuario inferior */
+.sidebar-user {
+    transition: all 0.25s ease;
+    overflow: hidden;
+}
+
+.user-avatar {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+    flex-shrink: 0;
+}
+
+.user-info-text,
+.user-logout-form {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+@media (min-width: 769px) {
+    .app-sidebar .user-info-text,
+    .app-sidebar .user-logout-form {
+        display: none;
+        opacity: 0;
+    }
+    .app-sidebar:hover .user-info-text,
+    .app-sidebar:hover .user-logout-form {
+        display: block;
+        opacity: 1;
+        transition: opacity 0.25s ease 0.08s;
+    }
 }
 
 .btn-logout-icon {
@@ -587,18 +725,6 @@ footer {
 }
 .btn-logout-icon:hover {
     color: #ef4444 !important;
-}
-
-/* Wrapper Principal */
-.app-main {
-    flex: 1 1 auto;
-    min-width: 0;
-    height: 100%;
-    max-height: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    position: relative;
 }
 
 /* Header / Topbar - Estrictamente fijo e inamovible */
@@ -637,6 +763,7 @@ footer {
     background: #94a3b8;
 }
 
+/* Responsive Móvil (<= 768px): Drawer Deslizante Completo */
 @media (max-width: 768px) {
     .app-sidebar {
         position: fixed;
@@ -645,12 +772,42 @@ footer {
         height: 100vh;
         height: 100dvh;
         width: 260px;
+        min-width: 260px;
+        max-width: 260px;
         z-index: 1060;
         transform: translateX(-100%);
-        box-shadow: 2px 0 10px rgba(0,0,0,0.5);
+        transition: transform 0.3s ease-in-out;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
     }
     .app-sidebar.show {
         transform: translateX(0) !important;
+    }
+    .app-main {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+    .sidebar-logo-mini {
+        display: none !important;
+    }
+    .sidebar-logo-full {
+        display: block !important;
+    }
+    .sidebar-nav .nav-link .nav-text {
+        opacity: 1 !important;
+        transform: none !important;
+        pointer-events: auto !important;
+    }
+    .sidebar-heading {
+        opacity: 1 !important;
+        height: auto !important;
+    }
+    .sidebar-heading .heading-text {
+        display: inline-block !important;
+    }
+    .user-info-text,
+    .user-logout-form {
+        display: block !important;
+        opacity: 1 !important;
     }
     .app-topbar {
         height: 60px !important;

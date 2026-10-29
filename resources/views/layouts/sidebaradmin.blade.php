@@ -129,89 +129,106 @@
         <!-- Sidebar -->
         <aside class="app-sidebar text-white shadow-lg" id="sidebar">
             <div class="sidebar-brand d-flex align-items-center justify-content-center border-bottom border-light border-opacity-10" style="height: 80px; min-height: 80px;">
-                <a href="{{ route('admin.dashboard') }}" class="text-decoration-none">
-                    <img src="{{ asset('img/logo_nuevo.svg') }}" alt="FactuWeb PRO" height="50">
+                <a href="{{ route('admin.dashboard') }}" class="text-decoration-none d-flex align-items-center justify-content-center w-100 px-2 overflow-hidden">
+                    <img src="{{ asset('img/favicon.svg') }}" alt="Logo" class="sidebar-logo-mini" height="38">
+                    <img src="{{ asset('img/logo_nuevo.svg') }}" alt="FactuWeb PRO" class="sidebar-logo-full" height="48">
                 </a>
             </div>
 
             <ul class="nav flex-column sidebar-nav mt-3 overflow-auto pb-5">
                 <li class="nav-item">
                     <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                        <i class="fa-solid fa-chart-pie"></i> Dashboard
+                        <i class="fa-solid fa-chart-pie"></i>
+                        <span class="nav-text">Dashboard</span>
                     </a>
                 </li>
                 
-                <li class="nav-item px-3 mt-4 mb-2 text-white-50 small fw-bold text-uppercase" style="letter-spacing: 1px;">Ventas</li>
+                <li class="nav-item sidebar-heading px-3 mt-4 mb-2 text-white-50 small fw-bold text-uppercase" style="letter-spacing: 1px;">
+                    <span class="heading-text">Ventas</span>
+                </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="fa-solid fa-file-invoice-dollar"></i> Facturación POS
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+                        <span class="nav-text">Facturación POS</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     @if (auth()->user()->role?->code === 'admin')
                         <a href="{{ route('clientes.index') }}" class="nav-link {{ request()->routeIs('clientes.*') ? 'active' : '' }}">
-                            <i class="fa-solid fa-users"></i> Clientes
+                            <i class="fa-solid fa-users"></i>
+                            <span class="nav-text">Clientes</span>
                         </a>
                     @endif
                 </li>
 
-                <li class="nav-item px-3 mt-4 mb-2 text-white-50 small fw-bold text-uppercase" style="letter-spacing: 1px;">Catálogo</li>
+                <li class="nav-item sidebar-heading px-3 mt-4 mb-2 text-white-50 small fw-bold text-uppercase" style="letter-spacing: 1px;">
+                    <span class="heading-text">Catálogo</span>
+                </li>
                 <li class="nav-item">
                     @if (auth()->user()->role?->code === 'admin')
                         <a href="{{ route('categorias.index') }}" class="nav-link {{ request()->routeIs('categorias.*') ? 'active' : '' }}">
-                            <i class="fa-solid fa-tags"></i> Categorías
+                            <i class="fa-solid fa-tags"></i>
+                            <span class="nav-text">Categorías</span>
                         </a>
                     @endif
                 </li>
                 <li class="nav-item">
                     @if (auth()->user()->role?->code === 'admin')
                         <a href="{{ route('producto.index') }}" class="nav-link {{ request()->routeIs('producto.*') ? 'active' : '' }}">
-                            <i class="fa-solid fa-box-open"></i> Productos
+                            <i class="fa-solid fa-box-open"></i>
+                            <span class="nav-text">Productos</span>
                         </a>
                     @endif
                 </li>
 
-                <li class="nav-item px-3 mt-4 mb-2 text-white-50 small fw-bold text-uppercase" style="letter-spacing: 1px;">Administración</li>
+                <li class="nav-item sidebar-heading px-3 mt-4 mb-2 text-white-50 small fw-bold text-uppercase" style="letter-spacing: 1px;">
+                    <span class="heading-text">Administración</span>
+                </li>
                 <li class="nav-item">
-
                     @if (auth()->user()->role?->code === 'admin')
                         <a href="{{ route('usuario.index') }}" class="nav-link {{ request()->routeIs('usuario.*') ? 'active' : '' }}">
-                            <i class="fa-solid fa-user-shield"></i> Empleados
+                            <i class="fa-solid fa-user-shield"></i>
+                            <span class="nav-text">Empleados</span>
                         </a>
                     @endif
                 </li>
                 <li class="nav-item">
                     @if (auth()->user()->role?->code === 'admin')
                         <a href="{{ route('empresas.index') }}" class="nav-link {{ request()->routeIs('empresas.*') ? 'active' : '' }}">
-                            <i class="fa-solid fa-building"></i> Empresa
+                            <i class="fa-solid fa-building"></i>
+                            <span class="nav-text">Empresa</span>
                         </a>
                     @endif
                 </li>
                 <li class="nav-item">
                     @if (auth()->user()->role?->code === 'admin')
                         <a href="{{ route('parametrizacion.index') }}" class="nav-link {{ request()->routeIs('parametrizacion.*') ? 'active' : '' }}">
-                            <i class="fa-solid fa-building-columns"></i> Parametrización DIAN
+                            <i class="fa-solid fa-building-columns"></i>
+                            <span class="nav-text">Parametrización DIAN</span>
                         </a>
                     @endif    
                 </li>
-                <li class="nav-item px-3 mt-4 mb-2 text-white-50 small fw-bold text-uppercase" style="letter-spacing: 1px;">REPORTES</li>
+                <li class="nav-item sidebar-heading px-3 mt-4 mb-2 text-white-50 small fw-bold text-uppercase" style="letter-spacing: 1px;">
+                    <span class="heading-text">Reportes</span>
+                </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="fa-solid fa-chart-line"></i> Ventas y Rentabilidad
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span class="nav-text">Ventas y Rentabilidad</span>
                     </a>
                 </li>
             </ul>
 
-            <div class="p-3 border-top border-light border-opacity-10 mt-auto">
-                <div class="d-flex align-items-center gap-2 p-2 rounded-3" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
-                    <div class="rounded-circle text-white d-flex align-items-center justify-content-center fw-bold fs-6 shadow-sm" style="width: 36px; height: 36px; min-width: 36px; background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);">
+            <div class="sidebar-user p-2 border-top border-light border-opacity-10 mt-auto">
+                <div class="d-flex align-items-center gap-2 p-2 rounded-3 user-card-inner" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
+                    <div class="rounded-circle text-white d-flex align-items-center justify-content-center fw-bold fs-6 shadow-sm user-avatar" style="width: 38px; height: 38px; min-width: 38px; background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);">
                         {{ $usuario_inicial }}
                     </div>
-                    <div class="overflow-hidden flex-grow-1">
+                    <div class="overflow-hidden flex-grow-1 user-info-text">
                         <h6 class="text-white mb-0 fw-bold text-truncate" style="font-size: 0.85rem;">{{ $usuario_nombre }}</h6>
                         <span class="text-white-50 d-block text-truncate" style="font-size: 0.7rem;"><i class="fa-solid fa-circle text-success" style="font-size: 0.5rem; vertical-align: middle; margin-right: 3px;"></i>En línea</span>
                     </div>
-                    <form method="POST" action="{{ route('logout') }}" class="m-0">
+                    <form method="POST" action="{{ route('logout') }}" class="m-0 user-logout-form">
                         @csrf
                         <button type="submit" class="btn btn-sm border-0 p-1 rounded-circle d-flex align-items-center justify-content-center text-white-50 btn-logout-icon" title="Cerrar Sesión" style="width: 28px; height: 28px; background: transparent;">
                             <i class="fa-solid fa-power-off"></i>
