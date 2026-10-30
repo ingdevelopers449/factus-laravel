@@ -480,21 +480,25 @@ footer {
 
 /* --- Dashboard App Layout - Hover Expandable Sidebar (FactuWeb PRO) --- */
 .app-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100vw;
+    width: 100%;
     width: 100dvw;
-    height: 100vh;
+    height: 100%;
     height: 100dvh;
     max-height: 100vh;
     max-height: 100dvh;
     overflow: hidden;
     background-color: #f8fafc;
     display: flex;
-    z-index: 1;
+    position: relative;
+}
+
+/* Modales de Bootstrap siempre al frente del backdrop y de la interfaz */
+.modal-backdrop {
+    z-index: 1050 !important;
+}
+
+.modal {
+    z-index: 1055 !important;
 }
 
 /* Sidebar en Desktop: Modo compacto por defecto (78px), expande a 260px al acercar el mouse */
