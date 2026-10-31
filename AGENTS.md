@@ -20,6 +20,7 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 - You must follow all existing code conventions used in this application. When creating or editing a file, check sibling files for the correct structure, approach, and naming.
 - Use descriptive names for variables and methods. For example, `isRegisteredForDiscounts`, not `discount()`.
 - Check for existing components to reuse before writing a new one.
+- **Git Commits:** All Git commit messages generated or suggested by the agent must strictly be written in Spanish using Conventional Commits format (`tipo(alcance): descripción en español`). See `.agents/rules/commits-rules.md`.
 
 ## Verification Policy
 

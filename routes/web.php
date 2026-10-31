@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\EmpresaController;
 use App\Http\Controllers\Admin\ParametrizacionController;
 use App\Http\Controllers\Admin\ProductoController;
 use App\Http\Controllers\Admin\UsuarioController;
+use App\Http\Controllers\Admin\FacturaController;
 use App\Http\Controllers\Empleado\DashboardController as EmpleadoDashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\EnsureUserHasRole;
@@ -49,6 +50,9 @@ Route::middleware([Authenticate::class, EnsureUserHasRole::class.':admin'])
             ->name('empresas.index');
         Route::match(['post', 'put'], '/empresas', [EmpresaController::class, 'update'])
             ->name('empresas.update');
+        // RUTA VISTA FACTURAS
+        Route::get('/facturas', [FacturaController::class, 'index'])
+            ->name('facturas.index');
 
         // RUTAS DE PARAMETRIZACION DIAN
         Route::get('/parametrizacion', [ParametrizacionController::class, 'index'])
