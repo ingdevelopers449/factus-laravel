@@ -143,7 +143,7 @@
                     </a>
                 </li>
                 
-                <li class="nav-item sidebar-heading px-3 mt-4 mb-2 text-white-50 small fw-bold text-uppercase" style="letter-spacing: 1px;">
+                <li class="nav-item sidebar-heading" title="Ventas">
                     <span class="heading-text">Ventas</span>
                 </li>
                 <li class="nav-item">
@@ -154,6 +154,14 @@
                 </li>
                 <li class="nav-item">
                     @if (auth()->user()->role?->code === 'admin')
+                        <a href="#" class="nav-link">
+                            <i class="fa-solid fa-receipt"></i>
+                            <span class="nav-text">Facturas</span>
+                        </a>
+                    @endif
+                </li>
+                <li class="nav-item">
+                    @if (auth()->user()->role?->code === 'admin')
                         <a href="{{ route('clientes.index') }}" class="nav-link {{ request()->routeIs('clientes.*') ? 'active' : '' }}">
                             <i class="fa-solid fa-users"></i>
                             <span class="nav-text">Clientes</span>
@@ -161,7 +169,7 @@
                     @endif
                 </li>
 
-                <li class="nav-item sidebar-heading px-3 mt-4 mb-2 text-white-50 small fw-bold text-uppercase" style="letter-spacing: 1px;">
+                <li class="nav-item sidebar-heading" title="Catálogo">
                     <span class="heading-text">Catálogo</span>
                 </li>
                 <li class="nav-item">
@@ -181,7 +189,7 @@
                     @endif
                 </li>
 
-                <li class="nav-item sidebar-heading px-3 mt-4 mb-2 text-white-50 small fw-bold text-uppercase" style="letter-spacing: 1px;">
+                <li class="nav-item sidebar-heading" title="Administración">
                     <span class="heading-text">Administración</span>
                 </li>
                 <li class="nav-item">
@@ -208,7 +216,7 @@
                         </a>
                     @endif    
                 </li>
-                <li class="nav-item sidebar-heading px-3 mt-4 mb-2 text-white-50 small fw-bold text-uppercase" style="letter-spacing: 1px;">
+                <li class="nav-item sidebar-heading" title="Reportes">
                     <span class="heading-text">Reportes</span>
                 </li>
                 <li class="nav-item">
