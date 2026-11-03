@@ -657,63 +657,6 @@ footer {
     }
 }
 
-/* Encabezados de sección (Ventas, Catálogo, Administración, etc.) */
-.sidebar-heading {
-    position: relative;
-    white-space: nowrap;
-    overflow: hidden;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    list-style: none;
-}
-
-.sidebar-heading .heading-text {
-    display: inline-flex;
-    align-items: center;
-    font-size: 0.72rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: #f59e0b;
-    white-space: nowrap;
-    line-height: 1;
-}
-
-@media (min-width: 769px) {
-    /* Modo compacto (78px): Separador visible y elegante entre secciones */
-    .app-sidebar .sidebar-heading {
-        height: 18px;
-        margin: 14px 18px 6px 18px !important;
-        padding: 0 !important;
-        border-top: 1px solid rgba(255, 255, 255, 0.14);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: default;
-    }
-
-    .app-sidebar .sidebar-heading .heading-text {
-        opacity: 0;
-        visibility: hidden;
-        transform: translateX(-10px);
-        transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
-    }
-
-    /* Modo expandido (:hover): Título de sección luminoso y destacado */
-    .app-sidebar:hover .sidebar-heading {
-        height: auto;
-        margin: 22px 20px 8px 20px !important;
-        padding: 4px 0 !important;
-        border-top: none;
-        display: block;
-    }
-
-    .app-sidebar:hover .sidebar-heading .heading-text {
-        opacity: 1;
-        visibility: visible;
-        transform: translateX(0);
-        transition: opacity 0.25s ease 0.08s, transform 0.25s ease 0.08s;
-    }
-}
 
 /* Tarjeta de usuario inferior */
 .sidebar-user {
@@ -825,19 +768,6 @@ footer {
         opacity: 1 !important;
         transform: none !important;
         pointer-events: auto !important;
-    }
-    .sidebar-heading {
-        opacity: 1 !important;
-        height: auto !important;
-        margin: 20px 20px 8px 20px !important;
-        border-top: none !important;
-        display: block !important;
-    }
-    .sidebar-heading .heading-text {
-        opacity: 1 !important;
-        visibility: visible !important;
-        transform: none !important;
-        display: inline-flex !important;
     }
     .user-info-text,
     .user-logout-form {

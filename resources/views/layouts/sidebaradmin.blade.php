@@ -143,8 +143,8 @@
                     </a>
                 </li>
                 
-                <li class="nav-item sidebar-heading" title="Ventas">
-                    <span class="heading-text">Ventas</span>
+                <li class="nav-item px-3 mt-4 mb-2 text-white-50 small fw-bold text-uppercase" style="letter-spacing: 1px;">
+                    Ventas
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
@@ -169,8 +169,8 @@
                     @endif
                 </li>
 
-                <li class="nav-item sidebar-heading" title="Catálogo">
-                    <span class="heading-text">Catálogo</span>
+                <li class="nav-item px-3 mt-4 mb-2 text-white-50 small fw-bold text-uppercase" style="letter-spacing: 1px;">
+                    Catálogo
                 </li>
                 <li class="nav-item">
                     @if (auth()->user()->role?->code === 'admin')
@@ -189,8 +189,8 @@
                     @endif
                 </li>
 
-                <li class="nav-item sidebar-heading" title="Administración">
-                    <span class="heading-text">Administración</span>
+                <li class="nav-item px-3 mt-4 mb-2 text-white-50 small fw-bold text-uppercase" style="letter-spacing: 1px;">
+                    Administración
                 </li>
                 <li class="nav-item">
                     @if (auth()->user()->role?->code === 'admin')
@@ -216,8 +216,8 @@
                         </a>
                     @endif    
                 </li>
-                <li class="nav-item sidebar-heading" title="Reportes">
-                    <span class="heading-text">Reportes</span>
+                <li class="nav-item px-3 mt-4 mb-2 text-white-50 small fw-bold text-uppercase" style="letter-spacing: 1px;">
+                    Reportes
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
