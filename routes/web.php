@@ -53,6 +53,8 @@ Route::middleware([Authenticate::class, EnsureUserHasRole::class.':admin'])
         // RUTA VISTA FACTURAS
         Route::get('/facturas', [FacturaController::class, 'index'])
             ->name('facturas.index');
+        Route::get('facturas/crear', [FacturaController::class, 'create'])
+            ->name('facturas.create');
 
         // RUTAS DE PARAMETRIZACION DIAN
         Route::get('/parametrizacion', [ParametrizacionController::class, 'index'])

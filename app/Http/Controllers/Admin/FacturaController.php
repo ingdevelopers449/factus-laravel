@@ -24,4 +24,9 @@ class FacturaController extends Controller
         // 3. Enviar los datos a la vista
         return view('admin.facturas.index', compact('facturas', 'buscar'));
     }
+
+    public function create()
+    {
+        return view('admin.facturas.create');
+    }
 }

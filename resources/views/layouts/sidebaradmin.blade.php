@@ -154,7 +154,7 @@
                 </li>
                 <li class="nav-item">
                     @if (auth()->user()->role?->code === 'admin')
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('facturas.index') }}" class="nav-link">
                             <i class="fa-solid fa-receipt"></i>
                             <span class="nav-text">Facturas</span>
                         </a>
