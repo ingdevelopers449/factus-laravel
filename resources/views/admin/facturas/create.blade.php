@@ -43,8 +43,18 @@
 
                     <div class="col-md-6">
                         <label class="form-label fw-semibold">Cliente</label>
+
                         <select class="form-select" name="id_cliente">
                             <option value="">Seleccionar cliente</option>
+
+                            @foreach ($cliente as $item)
+                                <option
+                                    value="{{ $item->id_cliente }}"
+                                    @selected(old('id_cliente') == $item->id_cliente)>
+                                    {{ $item->nombre_razon_social }}
+                                </option>
+                            @endforeach
+
                         </select>
                     </div>
 
@@ -77,8 +87,15 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <select class="form-select" name="productos[]">
+                                    <select class="form-select" name="id_producto">
                                         <option value="">Seleccionar producto</option>
+                                        @foreach ($producto as $produc)
+                                            <option
+                                                value="{{ $produc->id }}"
+                                                @selected(old('id_producto') == $produc->id)>
+                                                {{ $produc->producto }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </td>
 

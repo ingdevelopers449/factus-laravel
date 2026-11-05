@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Factura;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;     
+use App\Models\Cliente;
+use App\Models\Factura;
+use App\Models\Producto;
+use Illuminate\Http\Request;
 
 class FacturaController extends Controller
 {
@@ -27,6 +29,9 @@ class FacturaController extends Controller
 
     public function create()
     {
-        return view('admin.facturas.create');
+        $cliente = Cliente::all();
+        $producto = Producto::where('state', 1)->get();
+
+        return view('admin.facturas.create', compact('cliente', 'producto'));
     }
 }
