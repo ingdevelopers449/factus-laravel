@@ -55,6 +55,8 @@ Route::middleware([Authenticate::class, EnsureUserHasRole::class.':admin'])
             ->name('facturas.index');
         Route::get('facturas/crear', [FacturaController::class, 'create'])
             ->name('facturas.create');
+        Route::post('facturas/agregar-producto', [FacturaController::class, 'agregarProducto'])
+            ->name('facturas.agregarProducto');
 
         // RUTAS DE PARAMETRIZACION DIAN
         Route::get('/parametrizacion', [ParametrizacionController::class, 'index'])

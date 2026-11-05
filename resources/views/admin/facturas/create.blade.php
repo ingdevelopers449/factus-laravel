@@ -7,6 +7,13 @@
 <div class="container-fluid">
 
     {{-- ENCABEZADO --}}
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    @endif
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h3 class="fw-bold mb-1">Nueva factura</h3>
@@ -72,6 +79,63 @@
             </div>
 
             <div class="card-body">
+                {{-- FORMULARIO PARA AGREGAR PRODUCTOS --}}
+                
+                <form action="{{ route('facturas.agregarProducto') }}" method="POST" class="mb-4">
+                    @csrf
+
+                    <div class="row g-3 align-items-end">
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Seleccionar producto</label>
+
+                            <select name="id_producto" class="form-select" required>
+                                <option value="">Seleccionar producto</option>
+
+                                @foreach ($producto as $produc)
+                                    <option value="{{ $produc->id_producto }}">
+                                        {{ $produc->producto }}
+                                        - ${{ number_format($produc->precio_venta, 2, ',', '.') }}
+                                        (Stock: {{ $produc->stock }})
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label fw-semibold">Cantidad</label>
+
+                            <input
+                                type="number"
+                                name="cantidad"
+                                class="form-control"
+                                min="1"
+                                value="1"
+                                required
+                            >
+                        </div>
+
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-success w-100">
+                                <i class="fas fa-plus me-2"></i>
+                                Agregar producto
+                            </button>
+                        </div>
+
+                    </div>
+                </form>
+
+                @if ($errors->has('cantidad'))
+                    <div class="alert alert-danger py-2">
+                        {{ $errors->first('cantidad') }}
+                    </div>
+                @endif
+
+                @if ($errors->has('id_producto'))
+                    <div class="alert alert-danger py-2">
+                        {{ $errors->first('id_producto') }}
+                    </div>
+                @endif
 
                 <div class="table-responsive">
                     <table class="table table-bordered align-middle">
@@ -85,37 +149,39 @@
                         </thead>
 
                         <tbody>
-                            <tr>
-                                <td>
-                                    <select class="form-select" name="id_producto">
-                                        <option value="">Seleccionar producto</option>
-                                        @foreach ($producto as $produc)
-                                            <option
-                                                value="{{ $produc->id }}"
-                                                @selected(old('id_producto') == $produc->id)>
-                                                {{ $produc->producto }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </td>
+                            @forelse ($borrador->detalles as $detalle)
+                                <tr>
+                                    <td>
+                                        <div class="fw-semibold">
+                                            {{ $detalle->producto->producto }}
+                                        </div>
+                                    </td>
 
-                                <td>
-                                    <input
-                                        type="number"
-                                        class="form-control"
-                                        name="cantidades[]"
-                                        min="1"
-                                        placeholder="Cantidad">
-                                </td>
+                                    <td>
+                                        {{ $detalle->cantidad }}
+                                    </td>
 
-                                <td class="text-muted">
-                                    Se calculará automáticamente
-                                </td>
+                                    <td>
+                                        ${{ number_format($detalle->producto->precio_venta, 2, ',', '.') }}
+                                    </td>
 
-                                <td class="text-muted">
-                                    Se calculará automáticamente
-                                </td>
-                            </tr>
+                                    <td>
+                                        ${{ number_format(
+                                            $detalle->cantidad * $detalle->producto->precio_venta,
+                                            2,
+                                            ',',
+                                            '.'
+                                        ) }}
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted py-4">
+                                        <i class="fas fa-shopping-cart me-2"></i>
+                                        No hay productos agregados al borrador.
+                                    </td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

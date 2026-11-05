@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cliente;
 use App\Models\Factura;
 use App\Models\Producto;
+use App\Models\VentaBorrador;
 use Illuminate\Http\Request;
 
 class FacturaController extends Controller
@@ -30,8 +31,71 @@ class FacturaController extends Controller
     public function create()
     {
         $cliente = Cliente::all();
-        $producto = Producto::where('state', 1)->get();
+        $producto = Producto::where('state', 'activo')->get();
+        $borrador = VentaBorrador::firstOrCreate(
+            [
+                'id_usuario' => auth()->id()
+            ],
+            [
+                'id_cliente' => null
+            ]
+        );
 
-        return view('admin.facturas.create', compact('cliente', 'producto'));
+        $borrador->load('detalles.producto');
+
+        return view('admin.facturas.create', compact('cliente', 'producto', 'borrador'));
+    }
+
+    public function agregarProducto(Request $request)
+    {
+        // 1. Validar los datos recibidos
+        $request->validate([
+            'id_producto' => 'required|exists:productos,id_producto',
+            'cantidad' => 'required|integer|min:1'
+        ]);
+
+        // 2. Buscar el producto y verificar que esté activo
+        $producto = Producto::where('state', 'activo')
+            ->findOrFail($request->id_producto);
+
+        // 3. Obtener o crear el borrador del usuario
+        $borrador = VentaBorrador::firstOrCreate(
+            [
+                'id_usuario' => auth()->id()
+            ],
+            [
+                'id_cliente' => null
+            ]
+        );
+
+        // 4. Buscar el producto dentro del borrador
+        $detalle = $borrador->detalles()->firstOrNew([
+            'id_producto' => $producto->id_producto
+        ]);
+
+        // 5. Calcular la nueva cantidad acumulada
+        $cantidadActual = $detalle->exists
+            ? $detalle->cantidad
+            : 0;
+
+        $cantidadNueva = $cantidadActual + $request->cantidad;
+
+        // 6. Verificar que no supere el stock disponible
+        if ($cantidadNueva > $producto->stock) {
+            return back()
+                ->withErrors([
+                    'cantidad' => "Stock insuficiente. Disponible: {$producto->stock} unidades."
+                ])
+                ->withInput();
+        }
+
+        // 7. Asignar y guardar la cantidad
+        $detalle->cantidad = $cantidadNueva;
+        $detalle->save();
+
+        // 8. Redireccionar con mensaje de éxito
+        return redirect()
+            ->route('facturas.create')
+            ->with('success', 'Producto agregado al borrador correctamente.');
     }
 }
