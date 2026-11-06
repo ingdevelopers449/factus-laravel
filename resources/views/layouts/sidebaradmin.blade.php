@@ -137,18 +137,19 @@
 
             <ul class="nav flex-column sidebar-nav mt-3 overflow-auto pb-5">
                 <li class="nav-item">
-                    <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                    <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" title="Dashboard">
                         <i class="fa-solid fa-chart-pie"></i>
                         <span class="nav-text">Dashboard</span>
                     </a>
                 </li>
                 
-                <li class="nav-item px-3 mt-4 mb-2 text-white-50 small fw-bold text-uppercase" style="letter-spacing: 1px;">
-                    Ventas
+                <li class="sidebar-heading">
+                    <span class="sidebar-heading-text">Ventas</span>
+                    <span class="sidebar-heading-divider" title="Ventas"></span>
                 </li>
                 <li class="nav-item">
                     @if (auth()->user()->role?->code === 'admin')
-                        <a href="{{ route('facturas.create') }}" class="nav-link">
+                        <a href="{{ route('facturas.create') }}" class="nav-link {{ request()->routeIs('facturas.create') ? 'active' : '' }}" title="Facturación POS">
                             <i class="fa-solid fa-file-invoice-dollar"></i>
                             <span class="nav-text">Facturación POS</span>
                         </a>
@@ -156,7 +157,7 @@
                 </li>
                 <li class="nav-item">
                     @if (auth()->user()->role?->code === 'admin')
-                        <a href="{{ route('facturas.index') }}" class="nav-link">
+                        <a href="{{ route('facturas.index') }}" class="nav-link {{ request()->routeIs('facturas.index') ? 'active' : '' }}" title="Facturas">
                             <i class="fa-solid fa-receipt"></i>
                             <span class="nav-text">Facturas</span>
                         </a>
@@ -164,19 +165,20 @@
                 </li>
                 <li class="nav-item">
                     @if (auth()->user()->role?->code === 'admin')
-                        <a href="{{ route('clientes.index') }}" class="nav-link {{ request()->routeIs('clientes.*') ? 'active' : '' }}">
+                        <a href="{{ route('clientes.index') }}" class="nav-link {{ request()->routeIs('clientes.*') ? 'active' : '' }}" title="Clientes">
                             <i class="fa-solid fa-users"></i>
                             <span class="nav-text">Clientes</span>
                         </a>
                     @endif
                 </li>
 
-                <li class="nav-item px-3 mt-4 mb-2 text-white-50 small fw-bold text-uppercase" style="letter-spacing: 1px;">
-                    Catálogo
+                <li class="sidebar-heading">
+                    <span class="sidebar-heading-text">Catálogo</span>
+                    <span class="sidebar-heading-divider" title="Catálogo"></span>
                 </li>
                 <li class="nav-item">
                     @if (auth()->user()->role?->code === 'admin')
-                        <a href="{{ route('categorias.index') }}" class="nav-link {{ request()->routeIs('categorias.*') ? 'active' : '' }}">
+                        <a href="{{ route('categorias.index') }}" class="nav-link {{ request()->routeIs('categorias.*') ? 'active' : '' }}" title="Categorías">
                             <i class="fa-solid fa-tags"></i>
                             <span class="nav-text">Categorías</span>
                         </a>
@@ -184,19 +186,20 @@
                 </li>
                 <li class="nav-item">
                     @if (auth()->user()->role?->code === 'admin')
-                        <a href="{{ route('producto.index') }}" class="nav-link {{ request()->routeIs('producto.*') ? 'active' : '' }}">
+                        <a href="{{ route('producto.index') }}" class="nav-link {{ request()->routeIs('producto.*') ? 'active' : '' }}" title="Productos">
                             <i class="fa-solid fa-box-open"></i>
                             <span class="nav-text">Productos</span>
                         </a>
                     @endif
                 </li>
 
-                <li class="nav-item px-3 mt-4 mb-2 text-white-50 small fw-bold text-uppercase" style="letter-spacing: 1px;">
-                    Administración
+                <li class="sidebar-heading">
+                    <span class="sidebar-heading-text">Administración</span>
+                    <span class="sidebar-heading-divider" title="Administración"></span>
                 </li>
                 <li class="nav-item">
                     @if (auth()->user()->role?->code === 'admin')
-                        <a href="{{ route('usuario.index') }}" class="nav-link {{ request()->routeIs('usuario.*') ? 'active' : '' }}">
+                        <a href="{{ route('usuario.index') }}" class="nav-link {{ request()->routeIs('usuario.*') ? 'active' : '' }}" title="Empleados">
                             <i class="fa-solid fa-user-shield"></i>
                             <span class="nav-text">Empleados</span>
                         </a>
@@ -204,7 +207,7 @@
                 </li>
                 <li class="nav-item">
                     @if (auth()->user()->role?->code === 'admin')
-                        <a href="{{ route('empresas.index') }}" class="nav-link {{ request()->routeIs('empresas.*') ? 'active' : '' }}">
+                        <a href="{{ route('empresas.index') }}" class="nav-link {{ request()->routeIs('empresas.*') ? 'active' : '' }}" title="Empresa">
                             <i class="fa-solid fa-building"></i>
                             <span class="nav-text">Empresa</span>
                         </a>
@@ -212,26 +215,28 @@
                 </li>
                 <li class="nav-item">
                     @if (auth()->user()->role?->code === 'admin')
-                        <a href="{{ route('parametrizacion.index') }}" class="nav-link {{ request()->routeIs('parametrizacion.*') ? 'active' : '' }}">
+                        <a href="{{ route('parametrizacion.index') }}" class="nav-link {{ request()->routeIs('parametrizacion.*') ? 'active' : '' }}" title="Parametrización DIAN">
                             <i class="fa-solid fa-building-columns"></i>
                             <span class="nav-text">Parametrización DIAN</span>
                         </a>
                     @endif    
                 </li>
-                <li class="nav-item px-3 mt-4 mb-2 text-white-50 small fw-bold text-uppercase" style="letter-spacing: 1px;">
-                    Reportes
+
+                <li class="sidebar-heading">
+                    <span class="sidebar-heading-text">Reportes</span>
+                    <span class="sidebar-heading-divider" title="Reportes"></span>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="#" class="nav-link" title="Ventas y Rentabilidad">
                         <i class="fa-solid fa-chart-line"></i>
                         <span class="nav-text">Ventas y Rentabilidad</span>
                     </a>
                 </li>
             </ul>
 
-            <div class="sidebar-user p-2 border-top border-light border-opacity-10 mt-auto">
-                <div class="d-flex align-items-center gap-2 p-2 rounded-3 user-card-inner" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
-                    <div class="rounded-circle text-white d-flex align-items-center justify-content-center fw-bold fs-6 shadow-sm user-avatar" style="width: 38px; height: 38px; min-width: 38px; background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);">
+            <div class="sidebar-user border-top border-light border-opacity-10 mt-auto">
+                <div class="user-card-inner d-flex align-items-center">
+                    <div class="rounded-circle text-white d-flex align-items-center justify-content-center fw-bold shadow-sm user-avatar">
                         {{ $usuario_inicial }}
                     </div>
                     <div class="overflow-hidden flex-grow-1 user-info-text">

@@ -42,4 +42,19 @@ class Factura extends Model
     {
         return $this->belongsTo(Cliente::class, 'id_cliente', 'id_cliente');
     }
+
+    public function empresa(): BelongsTo
+    {
+        return $this->belongsTo(Empresa::class, 'id_empresa', 'id_empresa');
+    }
+
+    public function resolucion(): BelongsTo
+    {
+        return $this->belongsTo(Resolucion::class, 'id_resolucion', 'id_resolucion');
+    }
+
+    public function usuario(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'id_usuario', 'id');
+    }
 }

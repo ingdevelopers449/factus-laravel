@@ -15,15 +15,20 @@ class DetalleFactura extends Model
 
     protected $fillable = [
         'id_factura',
-        'id_prudcto',
+        'id_producto',
         'cantidad',
         'precio_unitario_venta',
-        'precio_unitatio_costo',
+        'precio_unitario_costo',
         'subtotal_linea',
     ];
 
     public function factura(): BelongsTo
     {
         return $this->belongsTo(Factura::class, 'id_factura', 'id');
+    }
+
+    public function producto(): BelongsTo
+    {
+        return $this->belongsTo(Producto::class, 'id_producto', 'id');
     }
 }

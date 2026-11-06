@@ -53,10 +53,16 @@ Route::middleware([Authenticate::class, EnsureUserHasRole::class.':admin'])
         // RUTA VISTA FACTURAS
         Route::get('/facturas', [FacturaController::class, 'index'])
             ->name('facturas.index');
-        Route::get('facturas/crear', [FacturaController::class, 'create'])
+        Route::get('/facturas/crear', [FacturaController::class, 'create'])
             ->name('facturas.create');
-        Route::post('facturas/agregar-producto', [FacturaController::class, 'agregarProducto'])
+        Route::post('/facturas', [FacturaController::class, 'store'])
+            ->name('facturas.store');
+        Route::post('/facturas/agregar-producto', [FacturaController::class, 'agregarProducto'])
             ->name('facturas.agregarProducto');
+        Route::delete('/facturas/eliminar-producto/{id}', [FacturaController::class, 'eliminarProducto'])
+            ->name('facturas.eliminarProducto');
+        Route::delete('/facturas/vaciar-borrador', [FacturaController::class, 'vaciarBorrador'])
+            ->name('facturas.vaciarBorrador');
 
         // RUTAS DE PARAMETRIZACION DIAN
         Route::get('/parametrizacion', [ParametrizacionController::class, 'index'])

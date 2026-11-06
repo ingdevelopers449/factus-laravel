@@ -8,10 +8,26 @@
     $subtotalCalculado = $detalles->sum(function ($det) {
         return $det->cantidad * ($det->producto?->precio_venta ?? 0);
     });
+    $totalIvaCalculado = $detalles->sum(function ($det) {
+        $base = $det->cantidad * ($det->producto?->precio_venta ?? 0);
+        return $base * (((float) ($det->producto?->iva ?? 0)) / 100);
+    });
+    $totalPagarCalculado = $subtotalCalculado + $totalIvaCalculado;
     $totalArticulos = $detalles->sum('cantidad');
 @endphp
 
 <div class="container-fluid px-0">
+
+    {{-- ALERTA DE ERRORES GENERALES (RESOLUCIÓN DIAN, STOCK, ETC.) --}}
+    @if ($errors->has('general'))
+        <div class="alert alert-danger py-3 px-4 mb-4 rounded-4 border-0 shadow-sm d-flex align-items-center gap-3">
+            <i class="fa-solid fa-triangle-exclamation fs-4 text-danger"></i>
+            <div>
+                <strong class="d-block">No se pudo procesar la factura</strong>
+                <span>{{ $errors->first('general') }}</span>
+            </div>
+        </div>
+    @endif
 
     {{-- ENCABEZADO DE LA VISTA POS --}}
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
@@ -119,7 +135,7 @@
                         </div>
                     </form>
 
-                    {{-- ALERTA DE ERRORES --}}
+                    {{-- ALERTA DE ERRORES DE STOCK / PRODUCTO --}}
                     @if ($errors->has('cantidad') || $errors->has('id_producto'))
                         <div class="mt-3">
                             @if ($errors->has('cantidad'))
@@ -163,9 +179,10 @@
                         <thead class="table-light">
                             <tr class="text-secondary small fw-bold text-uppercase" style="letter-spacing: 0.5px;">
                                 <th class="ps-4 py-3">Producto / Descripción</th>
-                                <th class="text-center py-3" style="width: 120px;">Cantidad</th>
-                                <th class="text-end py-3" style="width: 140px;">Precio Unit.</th>
-                                <th class="text-end pe-4 py-3" style="width: 160px;">Subtotal</th>
+                                <th class="text-center py-3" style="width: 110px;">Cantidad</th>
+                                <th class="text-end py-3" style="width: 130px;">Precio Unit.</th>
+                                <th class="text-end py-3" style="width: 140px;">Subtotal</th>
+                                <th class="text-center pe-4 py-3" style="width: 80px;">Acción</th>
                             </tr>
                         </thead>
 
@@ -196,6 +213,11 @@
                                                             <i class="fa-solid fa-barcode me-1"></i>{{ $detalle->producto->codigo_barras }}
                                                         </span>
                                                     @endif
+                                                    @if ($detalle->producto?->iva)
+                                                        <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle small px-2 py-0">
+                                                            IVA {{ number_format((float) $detalle->producto->iva, 0) }}%
+                                                        </span>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -214,13 +236,24 @@
                                     </td>
 
                                     {{-- Subtotal Ítem --}}
-                                    <td class="text-end pe-4 py-3 fw-bold text-dark" style="font-size: 0.98rem;">
+                                    <td class="text-end py-3 fw-bold text-dark" style="font-size: 0.98rem;">
                                         ${{ number_format($subtotalItem, 2, ',', '.') }}
+                                    </td>
+
+                                    {{-- Acción: Eliminar ítem del carrito --}}
+                                    <td class="text-center pe-4 py-3">
+                                        <form action="{{ route('facturas.eliminarProducto', $detalle->id_detalle_borrador) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-outline-danger border-0 rounded-circle d-inline-flex align-items-center justify-content-center" title="Quitar producto de la venta" style="width: 32px; height: 32px;">
+                                                <i class="fa-solid fa-trash-can"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="4" class="text-center py-5">
+                                    <td colspan="5" class="text-center py-5">
                                         <div class="py-4">
                                             <div class="rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
                                                  style="width: 64px; height: 64px; background: rgba(245, 158, 11, 0.1);">
@@ -275,7 +308,7 @@
 
                 <div class="card-body p-4">
 
-                    <form action="#" method="POST" class="m-0">
+                    <form action="{{ route('facturas.store') }}" method="POST" class="m-0">
                         @csrf
 
                         {{-- Selector de Cliente --}}
@@ -296,6 +329,9 @@
                                     @endforeach
                                 </select>
                             </div>
+                            @if ($errors->has('id_cliente'))
+                                <small class="text-danger d-block mt-1">{{ $errors->first('id_cliente') }}</small>
+                            @endif
                         </div>
 
                         {{-- Fecha de Emisión --}}
@@ -315,17 +351,20 @@
                                     required
                                 >
                             </div>
+                            @if ($errors->has('fecha_emision'))
+                                <small class="text-danger d-block mt-1">{{ $errors->first('fecha_emision') }}</small>
+                            @endif
                         </div>
 
-                        {{-- Desglose Financiero --}}
+                        {{-- Desglose Financiero con IVA real --}}
                         <div class="p-3 rounded-3 bg-light border mb-4">
                             <div class="d-flex justify-content-between align-items-center mb-2 text-secondary small">
                                 <span>Subtotal neto:</span>
                                 <span class="fw-semibold text-dark fs-6">${{ number_format($subtotalCalculado, 2, ',', '.') }}</span>
                             </div>
                             <div class="d-flex justify-content-between align-items-center text-secondary small">
-                                <span>IVA / Impuestos:</span>
-                                <span class="fw-semibold text-dark fs-6">$0,00</span>
+                                <span>IVA / Impuestos calculados:</span>
+                                <span class="fw-semibold text-dark fs-6">${{ number_format($totalIvaCalculado, 2, ',', '.') }}</span>
                             </div>
                         </div>
 
@@ -335,7 +374,7 @@
                                 Total a Pagar
                             </span>
                             <div class="fw-bolder mt-2" style="font-size: 2.3rem; color: #f59e0b; letter-spacing: -0.5px; line-height: 1;">
-                                ${{ number_format($subtotalCalculado, 2, ',', '.') }}
+                                ${{ number_format($totalPagarCalculado, 2, ',', '.') }}
                             </div>
                             <small class="text-white-50 mt-1 d-block" style="font-size: 0.78rem;">Moneda: COP</small>
                         </div>
@@ -349,11 +388,22 @@
                             <span>Generar Factura</span>
                         </button>
 
-                        <a href="{{ route('facturas.index') }}" class="btn btn-link text-muted text-decoration-none w-100 text-center py-2 small">
-                            <i class="fa-solid fa-arrow-left me-1"></i> Cancelar y volver al listado
-                        </a>
-
                     </form>
+
+                    {{-- ACCIONES DE CANCELACIÓN DE VENTA --}}
+                    @if ($detalles->isNotEmpty())
+                        <form action="{{ route('facturas.vaciarBorrador') }}" method="POST" class="d-block mt-2">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-link text-danger text-decoration-none w-100 text-center py-1 small" onclick="return confirm('¿Seguro que deseas vaciar todos los productos del carrito actual?')">
+                                <i class="fa-solid fa-trash-can me-1"></i> Cancelar venta y vaciar lista
+                            </button>
+                        </form>
+                    @endif
+
+                    <a href="{{ route('facturas.index') }}" class="btn btn-link text-muted text-decoration-none w-100 text-center py-1 small">
+                        <i class="fa-solid fa-arrow-left me-1"></i> Volver al historial
+                    </a>
 
                 </div>
 
