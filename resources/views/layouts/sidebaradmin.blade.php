@@ -147,10 +147,12 @@
                     Ventas
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fa-solid fa-file-invoice-dollar"></i>
-                        <span class="nav-text">Facturación POS</span>
-                    </a>
+                    @if (auth()->user()->role?->code === 'admin')
+                        <a href="{{ route('facturas.create') }}" class="nav-link">
+                            <i class="fa-solid fa-file-invoice-dollar"></i>
+                            <span class="nav-text">Facturación POS</span>
+                        </a>
+                    @endif
                 </li>
                 <li class="nav-item">
                     @if (auth()->user()->role?->code === 'admin')
