@@ -308,7 +308,7 @@
                         </div>
                         <div class="d-none d-md-block lh-sm text-start">
                             <div class="fw-semibold text-dark" style="font-size:.9rem;">{{ $usuario_nombre }}</div>
-                            <span class="badge rounded-pill px-2 text-white" style="background-color:{{ $color_rol }}; font-size:.68rem;">{{ $nombre_rol }}</span>
+                            <span class="badge rounded-pill px-2 text-white {{ $is_admin ? 'bg-role-admin' : 'bg-role-empleado' }}" style="font-size:.68rem;">{{ $nombre_rol }}</span>
                         </div>
                         <i class="fa-solid fa-chevron-down text-muted ms-1 d-none d-md-inline" style="font-size: 0.75rem;"></i>
                     </button>
@@ -319,7 +319,7 @@
                         <li class="px-3 py-2 border-bottom mb-1 bg-light">
                             <span class="fw-bold text-dark d-block text-truncate" style="font-size: 0.88rem;">{{ $usuario_nombre }}</span>
                             <small class="text-muted d-block text-truncate" style="font-size: 0.75rem;">{{ $user?->email }}</small>
-                            <span class="badge rounded-pill px-2 mt-1 text-white" style="background-color:{{ $color_rol }}; font-size: 0.68rem;">
+                            <span class="badge rounded-pill px-2 mt-1 text-white {{ $is_admin ? 'bg-role-admin' : 'bg-role-empleado' }}" style="font-size: 0.68rem;">
                                 {{ $nombre_rol }}
                             </span>
                         </li>

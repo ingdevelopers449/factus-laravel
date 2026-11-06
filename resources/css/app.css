@@ -1285,6 +1285,15 @@ body.ticket-pos {
     color: #0f172a;
 }
 
+/* Colores Sólidos de Roles para Badges de Header */
+.bg-role-admin {
+    background-color: #ea580c !important;
+}
+
+.bg-role-empleado {
+    background-color: #10b981 !important;
+}
+
 /* Badges de Roles (FactuWeb PRO - Soft & Profesional) */
 .badge-role-admin {
     background-color: #fff7ed;
