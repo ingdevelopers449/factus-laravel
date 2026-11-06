@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\EmpresaController;
 use App\Http\Controllers\Admin\FacturaController;
 use App\Http\Controllers\Admin\ParametrizacionController;
 use App\Http\Controllers\Admin\ProductoController;
+use App\Http\Controllers\Admin\RentabilidadController;
 use App\Http\Controllers\Admin\UsuarioController;
 use App\Http\Controllers\Empleado\DashboardController as EmpleadoDashboardController;
 use App\Http\Controllers\ProfileController;
@@ -67,6 +68,10 @@ Route::middleware([Authenticate::class, EnsureUserHasRole::class.':admin'])
             ->name('facturas.vaciarBorrador');
         Route::post('/facturas/{id}/transmitir-dian', [FacturaController::class, 'transmitirDian'])
             ->name('facturas.transmitirDian');
+
+        // REPORTE DE VENTAS Y RENTABILIDAD
+        Route::get('/rentabilidad', [RentabilidadController::class, 'index'])
+            ->name('rentabilidad.index');
 
         // RUTAS DE PARAMETRIZACION DIAN
         Route::get('/parametrizacion', [ParametrizacionController::class, 'index'])

@@ -227,7 +227,7 @@
                     <span class="sidebar-heading-divider" title="Reportes"></span>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link" title="Ventas y Rentabilidad">
+                    <a href="{{ route('rentabilidad.index') }}" class="nav-link {{ request()->routeIs('rentabilidad.*') ? 'active' : '' }}" title="Ventas y Rentabilidad">
                         <i class="fa-solid fa-chart-line"></i>
                         <span class="nav-text">Ventas y Rentabilidad</span>
                     </a>
