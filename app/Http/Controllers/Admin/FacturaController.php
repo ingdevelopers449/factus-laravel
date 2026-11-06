@@ -269,8 +269,21 @@ class FacturaController extends Controller
         });
 
         return redirect()
-            ->route('facturas.index')
-            ->with('success', "¡Factura {$factura->prefijo_resolucion}-{$factura->consecutivo} generada y aprobada por la DIAN exitosamente!");
+            ->route('facturas.show', $factura->id)
+            ->with('success', "¡Venta completada! Factura {$factura->prefijo_resolucion}-{$factura->consecutivo} emitida y aprobada por la DIAN exitosamente.");
+    }
+
+    public function show(string $id)
+    {
+        $factura = Factura::with([
+            'cliente',
+            'empresa',
+            'resolucion',
+            'usuario',
+            'detalles.producto',
+        ])->findOrFail($id);
+
+        return view('admin.facturas.show', compact('factura'));
     }
 
     public function transmitirDian(string $id)

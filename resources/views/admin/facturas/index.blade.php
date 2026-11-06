@@ -141,13 +141,12 @@
                                             </form>
                                         @endif
 
-                                        <button
-                                            type="button"
-                                            class="btn btn-sm btn-outline-primary"
-                                            title="Ver factura"
-                                            disabled>
+                                        <a href="{{ route('facturas.show', $factura->id) }}"
+                                           class="btn btn-sm btn-outline-primary d-inline-flex align-items-center gap-1"
+                                           title="Ver factura completa">
                                             <i class="fas fa-eye"></i>
-                                        </button>
+                                            <span class="d-none d-md-inline">Ver</span>
+                                        </a>
                                     </div>
                                 </td>
                             </tr>

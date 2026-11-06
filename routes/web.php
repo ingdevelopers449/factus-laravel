@@ -55,6 +55,8 @@ Route::middleware([Authenticate::class, EnsureUserHasRole::class.':admin'])
             ->name('facturas.index');
         Route::get('/facturas/crear', [FacturaController::class, 'create'])
             ->name('facturas.create');
+        Route::get('/facturas/{id}', [FacturaController::class, 'show'])
+            ->name('facturas.show');
         Route::post('/facturas', [FacturaController::class, 'store'])
             ->name('facturas.store');
         Route::post('/facturas/agregar-producto', [FacturaController::class, 'agregarProducto'])
