@@ -1,11 +1,10 @@
 <?php
 
 namespace App\Models;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\Cliente;
-use App\Models\DetalleFactura;
+
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Factura extends Model
 {
@@ -14,7 +13,6 @@ class Factura extends Model
     protected $primaryKey = 'id';
 
     public $timestamps = false;
-
 
     protected $fillable = [
         'id_empresa',

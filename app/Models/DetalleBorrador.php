@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class DetalleBorrador extends Model
 {
     protected $table = 'detalle_borrador';
+
     protected $primaryKey = 'id_detalle_borrador';
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -33,7 +35,7 @@ class DetalleBorrador extends Model
         return $this->belongsTo(
             Producto::class,
             'id_producto',
-            'id_producto'
+            'id'
         );
     }
 }

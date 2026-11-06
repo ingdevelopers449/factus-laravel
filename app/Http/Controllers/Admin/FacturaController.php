@@ -30,14 +30,20 @@ class FacturaController extends Controller
 
     public function create()
     {
-        $cliente = Cliente::all();
-        $producto = Producto::where('state', 'activo')->get();
+        $cliente = Cliente::orderBy('nombre_razon_social')->get();
+        $producto = Producto::where(function ($query) {
+            $query->where('state', 1)
+                ->orWhere('state', '1')
+                ->orWhere('state', 'activo')
+                ->orWhere('state', true);
+        })->orderBy('producto')->get();
+
         $borrador = VentaBorrador::firstOrCreate(
             [
-                'id_usuario' => auth()->id()
+                'id_usuario' => auth()->id(),
             ],
             [
-                'id_cliente' => null
+                'id_cliente' => null,
             ]
         );
 
@@ -50,27 +56,31 @@ class FacturaController extends Controller
     {
         // 1. Validar los datos recibidos
         $request->validate([
-            'id_producto' => 'required|exists:productos,id_producto',
-            'cantidad' => 'required|integer|min:1'
+            'id_producto' => 'required|exists:productos,id',
+            'cantidad' => 'required|integer|min:1',
         ]);
 
         // 2. Buscar el producto y verificar que esté activo
-        $producto = Producto::where('state', 'activo')
-            ->findOrFail($request->id_producto);
+        $producto = Producto::where(function ($query) {
+            $query->where('state', 1)
+                ->orWhere('state', '1')
+                ->orWhere('state', 'activo')
+                ->orWhere('state', true);
+        })->findOrFail($request->id_producto);
 
         // 3. Obtener o crear el borrador del usuario
         $borrador = VentaBorrador::firstOrCreate(
             [
-                'id_usuario' => auth()->id()
+                'id_usuario' => auth()->id(),
             ],
             [
-                'id_cliente' => null
+                'id_cliente' => null,
             ]
         );
 
         // 4. Buscar el producto dentro del borrador
         $detalle = $borrador->detalles()->firstOrNew([
-            'id_producto' => $producto->id_producto
+            'id_producto' => $producto->id,
         ]);
 
         // 5. Calcular la nueva cantidad acumulada
@@ -84,7 +94,7 @@ class FacturaController extends Controller
         if ($cantidadNueva > $producto->stock) {
             return back()
                 ->withErrors([
-                    'cantidad' => "Stock insuficiente. Disponible: {$producto->stock} unidades."
+                    'cantidad' => "Stock insuficiente. Disponible: {$producto->stock} unidades.",
                 ])
                 ->withInput();
         }

@@ -19,13 +19,11 @@ class DetalleFactura extends Model
         'cantidad',
         'precio_unitario_venta',
         'precio_unitatio_costo',
-        'subtotal_linea'
+        'subtotal_linea',
     ];
 
     public function factura(): BelongsTo
     {
         return $this->belongsTo(Factura::class, 'id_factura', 'id');
     }
-
-
 }
