@@ -63,6 +63,8 @@ Route::middleware([Authenticate::class, EnsureUserHasRole::class.':admin'])
             ->name('facturas.eliminarProducto');
         Route::delete('/facturas/vaciar-borrador', [FacturaController::class, 'vaciarBorrador'])
             ->name('facturas.vaciarBorrador');
+        Route::post('/facturas/{id}/transmitir-dian', [FacturaController::class, 'transmitirDian'])
+            ->name('facturas.transmitirDian');
 
         // RUTAS DE PARAMETRIZACION DIAN
         Route::get('/parametrizacion', [ParametrizacionController::class, 'index'])

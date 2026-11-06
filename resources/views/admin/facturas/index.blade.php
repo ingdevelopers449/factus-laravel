@@ -112,24 +112,43 @@
 
                                 <td>
                                     @if ($factura->estado_dian === 'aceptada')
-                                        <span class="badge bg-success">Aceptada</span>
+                                        <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-2 py-1 small">
+                                            <i class="fa-solid fa-circle-check me-1"></i> Aceptada
+                                        </span>
                                     @elseif ($factura->estado_dian === 'rechazada')
-                                        <span class="badge bg-danger">Rechazada</span>
+                                        <span class="badge bg-danger-subtle text-danger border border-danger-subtle rounded-pill px-2 py-1 small">
+                                            <i class="fa-solid fa-circle-xmark me-1"></i> Rechazada
+                                        </span>
                                     @else
-                                        <span class="badge bg-warning text-dark">
-                                            {{ ucfirst($factura->estado_dian) }}
+                                        <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle rounded-pill px-2 py-1 small">
+                                            <i class="fa-solid fa-clock me-1"></i> Pendiente
                                         </span>
                                     @endif
                                 </td>
 
                                 <td>
-                                    <button
-                                        type="button"
-                                        class="btn btn-sm btn-outline-primary"
-                                        title="Ver factura"
-                                        disabled>
-                                        <i class="fas fa-eye"></i>
-                                    </button>
+                                    <div class="d-inline-flex align-items-center gap-1">
+                                        @if ($factura->estado_dian === 'pendiente')
+                                            <form action="{{ route('facturas.transmitirDian', $factura->id) }}" method="POST" class="d-inline">
+                                                @csrf
+                                                <button
+                                                    type="submit"
+                                                    class="btn btn-sm btn-outline-success d-inline-flex align-items-center gap-1"
+                                                    title="Transmitir y validar con la DIAN (Simulación)">
+                                                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                                                    <span class="d-none d-md-inline">Transmitir</span>
+                                                </button>
+                                            </form>
+                                        @endif
+
+                                        <button
+                                            type="button"
+                                            class="btn btn-sm btn-outline-primary"
+                                            title="Ver factura"
+                                            disabled>
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
 

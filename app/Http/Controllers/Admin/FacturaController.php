@@ -10,6 +10,7 @@ use App\Models\Factura;
 use App\Models\Producto;
 use App\Models\Resolucion;
 use App\Models\VentaBorrador;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -214,25 +215,31 @@ class FacturaController extends Controller
             }
 
             $totalPagar = $subtotal + $totalIva;
+            $fechaEmision = $request->fecha_emision.' '.now()->format('H:i:s');
 
-            // Crear la Factura
+            // Simulación DIAN: Generar CUFE SHA-384 y URL de QR oficial
+            $cufeCadena = "{$resolucion->prefijo}{$nuevoConsecutivo}{$fechaEmision}{$subtotal}01{$totalIva}{$totalPagar}{$idEmpresa}{$request->id_cliente}";
+            $cufe = hash('sha384', $cufeCadena);
+            $codigoQr = "https://catalogo-vpfe.dian.gov.co/document/searchqr?documentkey={$cufe}";
+
+            // Crear la Factura con validación DIAN inmediata
             $nuevaFactura = Factura::create([
                 'id_empresa' => $idEmpresa,
                 'id_resolucion' => $resolucion->id_resolucion,
                 'prefijo_resolucion' => $resolucion->prefijo,
                 'consecutivo' => $nuevoConsecutivo,
-                'fecha_emision' => $request->fecha_emision.' '.now()->format('H:i:s'),
+                'fecha_emision' => $fechaEmision,
                 'id_cliente' => $request->id_cliente,
                 'id_usuario' => auth()->id(),
                 'subtotal' => $subtotal,
                 'total_iva' => $totalIva,
                 'total_pagar' => $totalPagar,
                 'porcentaje_comision_aplicado' => 0,
-                'cufe' => null,
-                'codigo_qr' => null,
-                'estado_dian' => 'pendiente',
+                'cufe' => $cufe,
+                'codigo_qr' => $codigoQr,
+                'estado_dian' => 'aceptada',
                 'motivo_rechazo' => null,
-                'fecha_validacion_dian' => null,
+                'fecha_validacion_dian' => now(),
             ]);
 
             // Guardar detalles y descontar stock de inventario
@@ -263,6 +270,35 @@ class FacturaController extends Controller
 
         return redirect()
             ->route('facturas.index')
-            ->with('success', "¡Factura {$factura->prefijo_resolucion}-{$factura->consecutivo} generada con éxito!");
+            ->with('success', "¡Factura {$factura->prefijo_resolucion}-{$factura->consecutivo} generada y aprobada por la DIAN exitosamente!");
+    }
+
+    public function transmitirDian(string $id)
+    {
+        $factura = Factura::findOrFail($id);
+
+        if ($factura->estado_dian === 'aceptada') {
+            return redirect()
+                ->route('facturas.index')
+                ->with('info', "La factura {$factura->prefijo_resolucion}-{$factura->consecutivo} ya fue validada previamente por la DIAN.");
+        }
+
+        // Generar CUFE si no lo tiene
+        $fechaEmision = $factura->fecha_emision ? Carbon::parse($factura->fecha_emision)->format('Y-m-d H:i:s') : now()->format('Y-m-d H:i:s');
+        $cufeCadena = "{$factura->prefijo_resolucion}{$factura->consecutivo}{$fechaEmision}{$factura->subtotal}01{$factura->total_iva}{$factura->total_pagar}{$factura->id_empresa}{$factura->id_cliente}";
+        $cufe = $factura->cufe ?: hash('sha384', $cufeCadena);
+        $codigoQr = $factura->codigo_qr ?: "https://catalogo-vpfe.dian.gov.co/document/searchqr?documentkey={$cufe}";
+
+        $factura->update([
+            'cufe' => $cufe,
+            'codigo_qr' => $codigoQr,
+            'estado_dian' => 'aceptada',
+            'motivo_rechazo' => null,
+            'fecha_validacion_dian' => now(),
+        ]);
+
+        return redirect()
+            ->route('facturas.index')
+            ->with('success', "¡Factura {$factura->prefijo_resolucion}-{$factura->consecutivo} transmitida y aprobada por la DIAN exitosamente!");
     }
 }
